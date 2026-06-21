@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Infrastructure\Persistence\Eloquent;
+
+use Database\Factories\CategoryFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Kalnoy\Nestedset\NodeTrait;
+
+class Category extends Model
+{
+    /** @use HasFactory<CategoryFactory> */
+    use HasFactory, NodeTrait;
+
+    protected $fillable = [
+        'parent_id',
+        'name',
+        'slug',
+        'status',
+        'description',
+    ];
+
+    public function products(): MorphToMany
+    {
+        return $this->morphedByMany(Product::class, 'categorizable');
+    }
+}

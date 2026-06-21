@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "laravel-boost": {
+      "command": "C:\\Users\\pulid\\.config\\herd-lite\\bin\\php.exe",
+      "args": [
+        "E:\\web\\backend\\shop-gaztochka\\artisan",
+        "boost:mcp"
+      ]
+    }
+  }
+}
