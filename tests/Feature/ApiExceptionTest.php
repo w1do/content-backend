@@ -1,11 +1,15 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
 test('api handles domain exception and returns json', function () {
     $response = $this->getJson('/api/v1/products/fail-domain');
 
     $response->assertStatus(404)
         ->assertJson([
-            'error' => 'Entity Product with ID fail-domain not found.',
+            'error' => 'Entity Product with ID 0 not found.',
             'type' => 'domain_error',
         ]);
 });

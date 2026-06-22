@@ -13,6 +13,11 @@ class Category extends Model
     /** @use HasFactory<CategoryFactory> */
     use HasFactory, NodeTrait;
 
+    protected static function newFactory()
+    {
+        return CategoryFactory::new();
+    }
+
     protected $fillable = [
         'parent_id',
         'name',

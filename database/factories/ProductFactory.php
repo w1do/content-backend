@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
  */
 class ProductFactory extends Factory
 {
+    protected $model = Product::class;
+
     /**
      * Define the model's default state.
      *

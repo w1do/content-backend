@@ -305,4 +305,9 @@ Rules:
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
 
+## Docs Summary
+After each implemented feature, implement block documentation in two different files.
+First, document it in docs/*.md example products.md, categories.md
+summary.md for a brief summary
+
 </laravel-boost-guidelines>

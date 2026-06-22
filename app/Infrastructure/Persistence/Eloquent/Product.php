@@ -12,6 +12,11 @@ class Product extends Model
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
+    protected static function newFactory()
+    {
+        return ProductFactory::new();
+    }
+
     protected $fillable = [
         'name',
         'slug',

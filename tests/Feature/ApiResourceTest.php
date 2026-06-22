@@ -1,5 +1,11 @@
 <?php
 
+use App\Infrastructure\Persistence\Eloquent\Category;
+use App\Infrastructure\Persistence\Eloquent\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
 test('products index returns json resource collection', function () {
     $response = $this->getJson('/api/v1/products');
 
@@ -10,7 +16,11 @@ test('products index returns json resource collection', function () {
 });
 
 test('product show returns json resource', function () {
-    $response = $this->getJson('/api/v1/products/1');
+    $category = Category::factory()->create();
+    $product = Product::factory()->create();
+    $product->categories()->attach($category);
+
+    $response = $this->getJson("/api/v1/products/{$product->id}");
 
     $response->assertStatus(200)
         ->assertJsonStructure([
@@ -25,8 +35,8 @@ test('product show returns json resource', function () {
         ])
         ->assertJson([
             'data' => [
-                'id' => '1',
-                'name' => 'Dummy',
+                'id' => $product->id,
+                'name' => $product->name,
             ],
         ]);
 });
@@ -41,7 +51,11 @@ test('categories index returns json resource collection', function () {
 });
 
 test('category show returns json resource', function () {
-    $response = $this->getJson('/api/v1/categories/1');
+    $category = Category::factory()->create([
+        'name' => 'Dummy Category',
+    ]);
+
+    $response = $this->getJson("/api/v1/categories/{$category->id}");
 
     $response->assertStatus(200)
         ->assertJsonStructure([
@@ -56,7 +70,7 @@ test('category show returns json resource', function () {
         ])
         ->assertJson([
             'data' => [
-                'id' => '1',
+                'id' => $category->id,
                 'name' => 'Dummy Category',
             ],
         ]);
