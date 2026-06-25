@@ -12,6 +12,8 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - php - 8.5
 - laravel/framework (LARAVEL) - v13
 - laravel/prompts (PROMPTS) - v0
+- laravel/sanctum (SANCTUM) - v4
+- larastan/larastan (LARASTAN) - v3
 - laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pail (PAIL) - v1
@@ -46,9 +48,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## Documentation Files
 
 - You must only create documentation files if explicitly requested by the user.
-
-## Packages
-- Use skills/packagesearch to find packages that are relevant to the user's needs.
 
 ## Replies
 
@@ -109,6 +108,13 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
+=== tests rules ===
+
+# Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+
 === laravel/core rules ===
 
 # Do Things the Laravel Way
@@ -128,156 +134,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## URL Generation
 
 - When generating links to other pages, prefer named routes and the `route()` function.
-
-## Architecture
-
-The project MUST follow **Domain-Driven Design (DDD)** and **CQRS (Command Query Responsibility Segregation)** principles.
-
-Any code that violates these rules must be refactored before new features are implemented.
-
----
-
-## Core Principles
-
-- Business logic MUST reside in the **Domain layer**, not in controllers, services, or infrastructure code.
-- Read (queries) and write (commands) operations MUST be strictly separated (CQRS).
-- The Domain layer MUST NOT depend on Application or Infrastructure layers.
-- All dependencies MUST point inward (Clean Architecture principle).
-
----
-
-## Layered Architecture
-
-### Domain Layer (CORE)
-Contains the core business logic:
-
-- Entities
-- Value Objects
-- Aggregates
-- Domain Events
-- Domain Services (only when logic does not fit into an entity)
-
-Rules:
-- MUST NOT depend on frameworks
-- MUST NOT contain database, HTTP, or transport logic
-- MUST encapsulate business invariants and rules
-
----
-
-### Application Layer
-Orchestrates use cases:
-
-- Commands (write operations)
-- Queries (read operations)
-- Command Handlers
-- Query Handlers
-- DTOs (input/output models)
-
-Rules:
-- MUST NOT contain business logic (only orchestration)
-- MUST call Domain layer to execute business rules
-- One handler per command/query
-- Coordinates transactions and workflows
-
----
-
-### Infrastructure Layer
-Implements external concerns:
-
-- Database (ORM, repositories implementation)
-- External APIs
-- Message brokers
-- File storage
-- Third-party integrations
-
-Rules:
-- Implements interfaces defined in Domain/Application
-- MAY depend on frameworks and external libraries
-- MUST NOT contain business logic
-
----
-
-### Presentation Layer (API / UI)
-Handles incoming requests:
-
-- Controllers / endpoints
-- Request validation
-- Authentication / authorization middleware
-- Mapping to commands/queries
-
-Rules:
-- MUST be a thin layer
-- MUST NOT contain business logic
-- MUST delegate all work to Application layer
-
----
-
-## CQRS Rules
-
-- Commands MUST change state and return minimal output (e.g. id, status).
-- Queries MUST NOT modify state.
-- Commands and Queries MUST have separate models and handlers.
-- DO NOT reuse DTOs between command and query sides.
-
----
-
-## Domain Rules (STRICT)
-
-- Entities are responsible for enforcing their own invariants.
-- Invalid states MUST NOT be constructible.
-- Use Value Objects for validated primitives (e.g. Email, Money, Id).
-- Domain Events SHOULD be used for side effects and integration workflows.
-- Business rules belong in the Domain, not in services or handlers.
-
----
-
-## Anti-Patterns (FORBIDDEN)
-
-- Business logic in controllers or API layer
-- Fat services ("God services", "Manager classes")
-- Direct database access outside Infrastructure layer
-- Mixing read and write models
-- Anemic domain model (entities without behavior)
-- Sharing models between Commands and Queries
-- Skipping Domain layer for “simplicity”
-
-
-## Folders Structure
-
-/Domain
-/Entities
-/ValueObjects
-/Aggregates
-/Events
-/Services
-
-/Application
-/Commands
-/Queries
-/Handlers
-/DTO
-
-/Infrastructure
-/Persistence
-/Repositories
-/ExternalServices
-/Messaging
-
-/Presentation
-/Controllers
-/Middleware
-/Validators
----
-
-## Agent Behavior Rules
-
-- ALWAYS place logic in the correct layer before writing code.
-- If unsure where logic belongs, default to Domain layer and justify placement.
-- Prefer refactoring existing violations over introducing new shortcuts.
-- NEVER violate CQRS separation, even for small or “simple” features.
-- Maintain strict architectural boundaries at all times.
-
----
 
 ## Testing
 
@@ -304,10 +160,5 @@ Rules:
 - The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
-
-## Docs Summary
-After each implemented feature, implement block documentation in two different files.
-First, document it in docs/*.md example products.md, categories.md
-summary.md for a brief summary
 
 </laravel-boost-guidelines>

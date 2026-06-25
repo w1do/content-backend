@@ -6,6 +6,7 @@ use App\Domain\Repositories\CategoryRepositoryInterface;
 use App\Domain\Repositories\ProductRepositoryInterface;
 use App\Infrastructure\Persistence\Repositories\EloquentCategoryRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentProductRepository;
+use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             CategoryRepositoryInterface::class,
             EloquentCategoryRepository::class
         );
+
+        Number::useLocale('en');
     }
 
     /**

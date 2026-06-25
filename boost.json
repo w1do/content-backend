@@ -11,9 +11,11 @@
         "laravel-best-practices",
         "pest-testing",
         "tailwindcss-development",
-        "fluxui-development",
-        "folio-routing",
-        "mcp-development",
-        "volt-development"
+        "laravel-query-builder",
+        "medialibrary-development",
+        "sluggable-development",
+        "architecture-ddd",
+        "laravel-activitylog",
+        "dtos"
     ]
 }
