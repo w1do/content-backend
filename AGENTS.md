@@ -22,6 +22,9 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - phpunit/phpunit (PHPUNIT) - v12
 - tailwindcss (TAILWINDCSS) - v4
 
+## Run Commands (sail)
+- use `sail` to run commands in the container example ./vendor/bin/sail artisan ...
+
 ## Skills Activation
 
 This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
@@ -113,7 +116,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 # Test Enforcement
 
 - Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
-- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `./vendor/bin/sail php artisan test --compact` with a specific filename or filter.
 
 === laravel/core rules ===
 
@@ -158,10 +161,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
 - The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
-- Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
+- Run tests: `./vendor/bin/sail php artisan test --compact` or filter: `./vendor/bin/sail php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
 
-# Documentation
+## Write Documentation
 - Write documentation for docs and summary.
 
 </laravel-boost-guidelines>
