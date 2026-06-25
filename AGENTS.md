@@ -29,6 +29,35 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
+#### Documentation (`documentations/SKILL.md`)
+- **When to activate:** After completing ANY code block (class, method, function, trait, interface)
+- **What it does:** Creates comprehensive documentation in PHPDoc/DocBlock format including purpose, parameters, return values, usage examples
+- **Triggers:**
+    - Creating a new class/method
+    - Modifying public API
+    - Adding complex logic
+- **Documentation language:** Russian (or specify your language)
+
+## Documentation Rules
+
+1. **Always** activate the documentation skill after implementing code
+2. Don't wait to be asked - this is a mandatory step
+3. Use PHPDoc format
+4. Document:
+    - All public methods
+    - Classes with purpose description
+    - Complex private methods
+    - Parameters and return values
+    - Exceptions
+    - Usage examples (for complex methods)
+
+## Documentation Exceptions
+
+- Trivial getters/setters without logic
+- Standard Laravel hooks without custom logic (boot, register, etc.)
+- Inherited methods without overrides
+- Tests (document through test method names)
+
 ## Conventions
 
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.

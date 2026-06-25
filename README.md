@@ -1,58 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## О проекте
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**ГазТочка** — автосервис по установке газового оборудования в Тюмени
 
-## About Laravel
+**Бэкенд построен на PHP 8.5 и Laravel 13 с использованием AI (Vibe Coding), Junie** 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Технологический стек
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Core**: PHP 8.5+, Laravel 13
+- **Admin Panel**: [Filament PHP v5](https://filamentphp.com/) (включая Media Library и Spatie Tags)
+- **Database**: PostgreSQL (поддержка иерархии через `kalnoy/nestedset`)
+- **API Documentation**: [Swagger (OpenAPI 3.0)](https://github.com/DarkaOnLine/L5-Swagger)
+- **Architecture**: DDD (Domain-Driven Design), CQRS (Command Query Responsibility Segregation)
+- **Testing**: [Pest v4](https://pestphp.com/)
+- **Code Style**: Laravel Pint
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Архитектура DDD/CQRS
 
-## Learning Laravel
+Проект следует принципам **DDD**, разделяя логику на четыре слоя:
+1. **Domain**: Сущности, перечисления и интерфейсы репозиториев (`app/Domain`).
+2. **Application**: Команды, запросы, хендлеры и DTO (`app/Application`).
+3. **Infrastructure**: Реализация репозиториев, работа с БД и внешними сервисами (`app/Infrastructure`).
+4. **Presentation**: API Контроллеры, ресурсы и UI компоненты (`app/Presentation`, `app/Http`).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Основные возможности
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Иерархический каталог**: Категории с неограниченной вложенностью и автоматическим расчетом хлебных крошек.
+- **Управление товарами**: Система товаров с динамическими атрибутами и связью с категориями.
+- **CMS**: Управление контентом (блог, статические страницы, системные тексты) через единую админ-панель.
+- **Media Library**: Загрузка и оптимизация изображений для товаров и контента.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Установка
 
-## Agentic Development
+1. Склонируйте репозиторий.
+2. Настройте файл `.env` (база данных, ключи).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+Или вручную:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+./vendor/bin/sail php artisan key:generate
+./vendor/bin/sail php artisan migrate
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Использование
 
-## Contributing
+### API
+Документация Swagger доступна по адресу:
+`GET /api/documentation`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Админ-панель
+Доступ к Filament:
+`/admin`
 
-## Code of Conduct
+### Тестирование
+Запуск всех тестов:
+```bash
+./vendor/bin/sail php artisan test
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Документация
+Подробные описания модулей находятся в папке `docs/`:
+- [Иерархия категорий](docs/categories.md)
+- [Система товаров](docs/products.md)
+- [Контент и CMS](docs/contents.md)
+- [Сводка изменений](docs/summary.md)
 
-## Security Vulnerabilities
+### Контакты
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> Разработал Денис Митрофанов
 
-## License
+**Сайт: [Веб сайт AI-инженер](https://w1do.ru)**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**TG: [W1DO_DIGITAL](https://t.me/W1DO_DIGITAL)**
+
+**MAX: [Простите за MAX](https://max.ru/u/f9LHodD0cOKlpm9dqNIVXbxyaDeOEKzC4jizdf-1qeqNIOnm7yL9qs68d58)**
+
+**Мой канал: [YouTube](https://www.youtube.com/@w1do_digital)**
+
+## Для работодателей и нанимателей
+- Только удаленка
+- Внедрение AI / Разработка (Claude, Junie, Codex)
+
