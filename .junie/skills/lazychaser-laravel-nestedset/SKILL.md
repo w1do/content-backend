@@ -1,3 +1,12 @@
+---
+name: lazychaser-laravel-nestedset
+description: "Apply this skill laravel nested sets rules"
+license: MIT
+metadata:
+  author: UNIQDEVELOPER
+---
+
+
 This is a Laravel package for working with trees in relational databases.
 
 *   **Laravel 13** is supported since v7.0.0

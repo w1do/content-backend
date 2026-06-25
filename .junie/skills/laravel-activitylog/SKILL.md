@@ -1,3 +1,11 @@
+---
+name: laravel-activitylog
+description: "Apply this skill laravel-activitylog rules"
+license: MIT
+metadata:
+  author: UNIQDEVELOPER
+---
+
 # spatie/laravel-activitylog
 
 Activity logging package for Laravel. Logs model events and manual activities to a database table.

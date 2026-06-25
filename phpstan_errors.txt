@@ -1,0 +1,332 @@
+Note: Using configuration file /home/dev/backend/gaztochka/phpstan.neon.
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Application/Handlers/Products/GetProductsByCategoryHandler.php     
+ ------ ----------------------------------------------------------------------- 
+  14     Property                                                               
+         App\Application\Handlers\Products\GetProductsByCategoryHandler::$cate  
+         goryRepository is never read, only written.                            
+         🪪  property.onlyWritten                                               
+         💡  See:                                                               
+         https://phpstan.org/developing-extensions/always-read-written-propert  
+         ies                                                                    
+         at                                                                     
+         app/Application/Handlers/Products/GetProductsByCategoryHandler.php:14  
+  26     Call to private method pluck() of parent class                         
+         Illuminate\Database\Eloquent\Relations\Relation<Illuminate\Database\E  
+         loquent\Model,Illuminate\Database\Eloquent\Model,mixed>.               
+         🪪  method.private                                                     
+         at                                                                     
+         app/Application/Handlers/Products/GetProductsByCategoryHandler.php:26  
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Filament/Forms/Components/CategorySelect.php                       
+ ------ ----------------------------------------------------------------------- 
+  20     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$id.                               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Filament/Forms/Components/CategorySelect.php:20                 
+  22     Call to an undefined method Illuminate\Database\Eloquent\Builder<App\  
+         Infrastructure\Persistence\Eloquent\Category>::withDepth().            
+         🪪  method.notFound                                                    
+         at app/Filament/Forms/Components/CategorySelect.php:22                 
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Filament/Resources/Categories/CategoryResource.php                 
+ ------ ----------------------------------------------------------------------- 
+  36     Call to an undefined method Illuminate\Database\Eloquent\Builder<Illu  
+         minate\Database\Eloquent\Model>::withDepth().                          
+         🪪  method.notFound                                                    
+         at app/Filament/Resources/Categories/CategoryResource.php:36           
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------- 
+  Line   app/Http/Controllers/Controller.php                                   
+ ------ ---------------------------------------------------------------------- 
+  14     Constant L5_SWAGGER_CONST_HOST not found.                             
+         🪪  constant.notFound                                                 
+         💡  Learn more at https://phpstan.org/user-guide/discovering-symbols  
+         at app/Http/Controllers/Controller.php:14                             
+ ------ ---------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Http/Resources/Api/Category/CategoryResource.php                   
+ ------ ----------------------------------------------------------------------- 
+  20     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$id.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:20             
+  21     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$name.               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:21             
+  22     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$slug.               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:22             
+  23     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$status.             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:23             
+  24     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$description.        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:24             
+  25     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$parent_id.          
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:25             
+  30     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$created_at.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:30             
+  31     Access to an undefined property                                        
+         App\Http\Resources\Api\Category\CategoryResource::$updated_at.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at app/Http/Resources/Api/Category/CategoryResource.php:31             
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------ 
+  Line   app/Infrastructure/Persistence/Eloquent/Category.php        
+ ------ ------------------------------------------------------------ 
+  39     Call to an undefined method                                 
+         Spatie\Image\Drivers\ImageDriver::nonQueued().              
+         🪪  method.notFound                                         
+         at app/Infrastructure/Persistence/Eloquent/Category.php:39  
+ ------ ------------------------------------------------------------ 
+
+ ------ ----------------------------------------------------------- 
+  Line   app/Infrastructure/Persistence/Eloquent/Product.php        
+ ------ ----------------------------------------------------------- 
+  38     Call to an undefined method                                
+         Spatie\Image\Drivers\ImageDriver::nonQueued().             
+         🪪  method.notFound                                        
+         at app/Infrastructure/Persistence/Eloquent/Product.php:38  
+ ------ ----------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Infrastructure/Persistence/Repositories/EloquentCategoryRepositor  
+         y.php                                                                  
+ ------ ----------------------------------------------------------------------- 
+  16     Call to an undefined static method                                     
+         App\Infrastructure\Persistence\Eloquent\Category::defaultOrder().      
+         🪪  staticMethod.notFound                                              
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentCategoryRepositor  
+         y.php:16                                                               
+  29     Call to an undefined static method                                     
+         App\Infrastructure\Persistence\Eloquent\Category::defaultOrder().      
+         🪪  staticMethod.notFound                                              
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentCategoryRepositor  
+         y.php:29                                                               
+  92     Parameter #1 $callback of method                                       
+         Illuminate\Database\Eloquent\Collection<int,Illuminate\Database\Eloqu  
+         ent\Model>::map() expects callable(Illuminate\Database\Eloquent\Model  
+         , int): App\Domain\Entities\Category,                                  
+         Closure(App\Infrastructure\Persistence\Eloquent\Category):             
+         App\Domain\Entities\Category given.                                    
+         🪪  argument.type                                                      
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentCategoryRepositor  
+         y.php:92                                                               
+  100    Access to an undefined property                                        
+         App\Infrastructure\Persistence\Eloquent\Category::$parent_id.          
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentCategoryRepositor  
+         y.php:100                                                              
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   app/Infrastructure/Persistence/Repositories/EloquentProductRepository  
+         .php                                                                   
+ ------ ----------------------------------------------------------------------- 
+  67     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model&object{pivot:                       
+         Illuminate\Database\Eloquent\Relations\MorphPivot}::$id.               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentProductRepository  
+         .php:67                                                                
+  67     Using nullsafe property access "?->id" on left side of ?? is           
+         unnecessary. Use -> instead.                                           
+         🪪  nullsafe.neverNull                                                 
+         at                                                                     
+         app/Infrastructure/Persistence/Repositories/EloquentProductRepository  
+         .php:67                                                                
+ ------ ----------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------- 
+  Line   database/seeders/CategorySeeder.php                           
+ ------ -------------------------------------------------------------- 
+  47     Call to an undefined static method                            
+         App\Infrastructure\Persistence\Eloquent\Category::fixTree().  
+         🪪  staticMethod.notFound                                     
+         at database/seeders/CategorySeeder.php:47                     
+ ------ -------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------- 
+  Line   tests/Feature/ApiExceptionTest.php                                  
+ ------ -------------------------------------------------------------------- 
+  8      Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiExceptionTest.php:8                             
+  18     Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiExceptionTest.php:18                            
+ ------ -------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------- 
+  Line   tests/Feature/ApiResourceTest.php                                   
+ ------ -------------------------------------------------------------------- 
+  10     Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiResourceTest.php:10                             
+  23     Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiResourceTest.php:23                             
+  45     Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiResourceTest.php:45                             
+  58     Call to an undefined method Pest\PendingCalls\TestCall::getJson().  
+         🪪  method.notFound                                                 
+         at tests/Feature/ApiResourceTest.php:58                             
+ ------ -------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   tests/Feature/CategoryTest.php                                         
+ ------ ----------------------------------------------------------------------- 
+  17     Call to an undefined method Pest\PendingCalls\TestCall::postJson().    
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:17                                   
+  22     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:22                                   
+  34     Call to an undefined method Pest\PendingCalls\TestCall::putJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:34                                   
+  39     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:39                                   
+  45     Call to an undefined method Pest\PendingCalls\TestCall::deleteJson().  
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:45                                   
+  48     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseMissing().                   
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:48                                   
+  65     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:65                                   
+  70     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:70                                   
+  75     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:75                                   
+  81     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:81                                   
+  95     Call to an undefined method Pest\PendingCalls\TestCall::postJson().    
+         🪪  method.notFound                                                    
+         at tests/Feature/CategoryTest.php:95                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------- 
+  Line   tests/Feature/ExampleTest.php                                   
+ ------ ---------------------------------------------------------------- 
+  4      Call to an undefined method Pest\PendingCalls\TestCall::get().  
+         🪪  method.notFound                                             
+         at tests/Feature/ExampleTest.php:4                              
+ ------ ---------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   tests/Feature/Infrastructure/Persistence/Repositories/EloquentProduct  
+         RepositoryTest.php                                                     
+ ------ ----------------------------------------------------------------------- 
+  55     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at                                                                     
+         tests/Feature/Infrastructure/Persistence/Repositories/EloquentProduct  
+         RepositoryTest.php:55                                                  
+  76     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at                                                                     
+         tests/Feature/Infrastructure/Persistence/Repositories/EloquentProduct  
+         RepositoryTest.php:76                                                  
+  86     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseMissing().                   
+         🪪  method.notFound                                                    
+         at                                                                     
+         tests/Feature/Infrastructure/Persistence/Repositories/EloquentProduct  
+         RepositoryTest.php:86                                                  
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   tests/Feature/ProductControllerTest.php                                
+ ------ ----------------------------------------------------------------------- 
+  16     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:16                          
+  27     Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:27                          
+  44     Call to an undefined method Pest\PendingCalls\TestCall::postJson().    
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:44                          
+  49     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:49                          
+  68     Call to an undefined method Pest\PendingCalls\TestCall::putJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:68                          
+  73     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseHas().                       
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:73                          
+  84     Call to an undefined method Pest\PendingCalls\TestCall::deleteJson().  
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:84                          
+  88     Call to an undefined method                                            
+         Pest\PendingCalls\TestCall::assertDatabaseMissing().                   
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:88                          
+  94     Call to an undefined method Pest\PendingCalls\TestCall::postJson().    
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:94                          
+  101    Call to an undefined method Pest\PendingCalls\TestCall::getJson().     
+         🪪  method.notFound                                                    
+         at tests/Feature/ProductControllerTest.php:101                         
+ ------ ----------------------------------------------------------------------- 
+
+ [ERROR] Found 54 errors                                                        
+

@@ -16,6 +16,7 @@
         "sluggable-development",
         "architecture-ddd",
         "laravel-activitylog",
-        "dtos"
+        "dtos",
+        "documentation"
     ]
 }

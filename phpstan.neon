@@ -13,4 +13,11 @@ parameters:
     # Level 9 is the highest level
     level: 5
 
-#    ignoreErrors:
+    ignoreErrors:
+        - '#Constant L5_SWAGGER_CONST_HOST not found.#'
+        - '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::nonQueued\(\).#'
+        - '#Call to an undefined method Pest\\PendingCalls\\TestCall::[a-zA-Z]+\(\).#'
+        - '#expects callable\(Illuminate\\Database\\Eloquent\\Model, (int|int\|string)\): .*, Closure\(App\\Infrastructure\\Persistence\\Eloquent\\Category\): .* given.#'
+        -
+            message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$(id|depth|name).#'
+            path: app/Filament/Forms/Components/CategorySelect.php

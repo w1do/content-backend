@@ -26,9 +26,10 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
     {
         // For simple tree representation in entities, we might need a more complex toEntity
         // but for now, let's just return a flat list ordered as a tree
-        return CategoryModel::defaultOrder()
-            ->get()
-            ->toTree()
+        /** @var \Kalnoy\Nestedset\Collection $collection */
+        $collection = CategoryModel::defaultOrder()->get();
+
+        return $collection->toTree()
             ->map(fn (CategoryModel $model) => $this->toEntity($model))
             ->toArray();
     }

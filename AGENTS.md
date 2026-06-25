@@ -161,4 +161,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
 
+# Documentation
+- Write documentation for docs and summary.
+
 </laravel-boost-guidelines>

@@ -1,3 +1,11 @@
+---
+name: dtos
+description: "Apply this skill dtos rules"
+license: MIT
+metadata:
+  author: UNIQDEVELOPER
+---
+
 # Data Transfer Objects (DTO) with spatie/laravel-data
 
 Данный навык описывает работу с DTO в Laravel с использованием пакета `spatie/laravel-data`. Этот пакет объединяет в себе функционал FormRequests, API Resources и DTO.

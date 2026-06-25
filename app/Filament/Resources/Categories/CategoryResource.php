@@ -21,9 +21,22 @@ class CategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getModelLabel(): string
+    {
+        return __('Категория');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Категории');
+    }
+
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withDepth()->defaultOrder();
+        /** @var \Kalnoy\Nestedset\QueryBuilder $query */
+        $query = parent::getEloquentQuery();
+
+        return $query->withDepth()->defaultOrder();
     }
 
     public static function form(Schema $schema): Schema

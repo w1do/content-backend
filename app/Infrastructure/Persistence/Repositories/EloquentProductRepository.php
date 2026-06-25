@@ -62,9 +62,12 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
     private function toEntity(ProductModel $model): ProductEntity
     {
+        /** @var \App\Infrastructure\Persistence\Eloquent\Category|null $category */
+        $category = $model->categories()->first();
+
         return new ProductEntity(
             id: $model->id,
-            categoryId: $model->categories()->first()?->id ?? 0,
+            categoryId: $category ? $category->id : 0,
             name: $model->name,
             slug: $model->slug,
             description: $model->description,

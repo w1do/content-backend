@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Schemas;
+namespace App\Filament\Resources\Products\Schemas;
 
 use App\Filament\Forms\Components\CategorySelect;
-use App\Infrastructure\Persistence\Eloquent\Category;
+use App\Infrastructure\Persistence\Eloquent\Product;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
-class CategoryForm
+class ProductForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -35,32 +35,37 @@ class CategoryForm
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)
-                                ->unique(Category::class, 'slug', ignoreRecord: true),
+                                ->unique(Product::class, 'slug', ignoreRecord: true),
                         ])->columns(2),
 
-                        CategorySelect::make('parent_id')
-                            ->label('Родительская категория')
-                            ->relationship('parent', 'name')
-                            ->placeholder('Выберите родительскую категорию (опционально)'),
+                        CategorySelect::make('categories')
+                            ->relationship('categories', 'name')
+                            ->multiple()
+                            ->preload(),
 
                         RichEditor::make('description')
                             ->label('Описание')
                             ->columnSpanFull(),
 
-                        ToggleButtons::make('status')
-                            ->label('Статус')
-                            ->options([
-                                'active' => 'Активен',
-                                'inactive' => 'Неактивен',
-                            ])
-                            ->default('active')
-                            ->inline(),
+                        KeyValue::make('attributes')
+                            ->label('Характеристики')
+                            ->columnSpanFull(),
 
                         SpatieMediaLibraryFileUpload::make('image')
-                            ->label('Изображение')
+                            ->label('Главное изображение')
                             ->collection('main')
                             ->image()
                             ->imageEditor(),
+
+                        SpatieMediaLibraryFileUpload::make('gallery')
+                            ->label('Галерея')
+                            ->collection('gallery')
+                            ->multiple()
+                            ->reorderable()
+                            ->image()
+                            ->imageEditor()
+                            ->panelLayout('grid')
+                            ->columns(2),
                     ])->columnSpanFull(),
             ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Products\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -9,7 +9,7 @@ use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class ProductsTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,41 +18,22 @@ class CategoriesTable
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label('Изображение')
                     ->collection('main')
-                    ->conversion('thumb')
-                    ->circular(),
+                    ->conversion('thumb'),
 
                 TextColumn::make('name')
                     ->label('Наименование')
                     ->searchable()
-                    ->sortable()
-                    ->formatStateUsing(function ($record, $state) {
-                        $depth = $record->depth ?? 0;
-                        if ($depth === 0 && ! isset($record->depth)) {
-                            // Если depth не подгружен, попробуем вычислить
-                            // Но лучше использовать defaultOrder() или withDepth() в ресурсе
-                        }
-
-                        return str_repeat('— ', $depth).$state;
-                    }),
+                    ->sortable(),
 
                 TextColumn::make('slug')
                     ->label('Слаг')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('status')
-                    ->label('Статус')
+                TextColumn::make('categories.name')
+                    ->label('Категории')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'active' => 'Активен',
-                        'inactive' => 'Неактивен',
-                        default => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'active' => 'success',
-                        'inactive' => 'danger',
-                        default => 'gray',
-                    }),
+                    ->searchable(),
 
                 TextColumn::make('created_at')
                     ->label('Дата создания')
@@ -60,7 +41,6 @@ class CategoriesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('_lft')
             ->filters([
                 //
             ])

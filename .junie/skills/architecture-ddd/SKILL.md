@@ -1,3 +1,11 @@
+---
+name: architecture-ddd
+description: "Apply this skill architecture-ddd rules"
+license: MIT
+metadata:
+  author: UNIQDEVELOPER
+---
+
 # DDD Architecture in Laravel
 
 Domain-Driven Design (DDD) focus on the core domain and domain logic. This skill provides guidelines for a simplified, non-bloated DDD structure in Laravel projects.
