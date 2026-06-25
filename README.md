@@ -70,7 +70,7 @@ composer install
 
 > Разработал Денис Митрофанов
 
-**Сайт: [Веб сайт AI-инженер](https://w1do.ru)**
+**Сайт: [AI-инженер](https://w1do.ru)**
 
 **TG: [W1DO_DIGITAL](https://t.me/W1DO_DIGITAL)**
 
