@@ -54,9 +54,8 @@ RUN composer install --no-scripts --no-autoloader --prefer-dist --ignore-platfor
 COPY . .
 RUN composer dump-autoload
 
-# RUN cp .env.example .env && php artisan key:generate && php artisan test --no-ansi --exclude-group slow
+RUN cp .env.example .env && php artisan key:generate && php artisan test --no-ansi --exclude-group slow
 
-RUN php artisan key:generate && php artisan test --no-ansi --exclude-group slow
 
 # Stage 4: Final Production Image
 FROM php:8.5-fpm-alpine
