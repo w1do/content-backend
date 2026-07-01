@@ -31,49 +31,41 @@ class BlogPost extends Model implements HasMedia
 ## Adding Media
 
 ### From uploaded file
-
 ```php
 $model->addMedia($request->file('image'))->toMediaCollection('images');
 ```
 
 ### From request (shorthand)
-
 ```php
 $model->addMediaFromRequest('image')->toMediaCollection('images');
 ```
 
 ### From URL
-
 ```php
 $model->addMediaFromUrl('https://example.com/image.jpg')->toMediaCollection('images');
 ```
 
 ### From string content
-
 ```php
 $model->addMediaFromString('raw content')->usingFileName('file.txt')->toMediaCollection('files');
 ```
 
 ### From base64
-
 ```php
 $model->addMediaFromBase64($base64Data)->usingFileName('photo.jpg')->toMediaCollection('images');
 ```
 
 ### From stream
-
 ```php
 $model->addMediaFromStream($stream)->usingFileName('file.pdf')->toMediaCollection('files');
 ```
 
 ### From existing disk
-
 ```php
 $model->addMediaFromDisk('path/to/file.jpg', 's3')->toMediaCollection('images');
 ```
 
 ### Multiple files from request
-
 ```php
 $model->addMultipleMediaFromRequest(['images'])->each(function ($fileAdder) {
     $fileAdder->toMediaCollection('images');
@@ -85,7 +77,6 @@ $model->addAllMediaFromRequest()->each(function ($fileAdder) {
 ```
 
 ### Copy instead of move
-
 ```php
 $model->copyMedia($pathToFile)->toMediaCollection('images');
 // or
@@ -110,7 +101,6 @@ $model->addMedia($file)
 ```
 
 ### Store on cloud disk
-
 ```php
 $model->addMedia($file)->toMediaCollectionOnCloudDisk('images');
 ```
@@ -254,7 +244,6 @@ Other:
 ## Retrieving Media
 
 ### Getting media items
-
 ```php
 $media = $model->getMedia('images');                    // all in collection
 $first = $model->getFirstMedia('images');               // first item
@@ -263,7 +252,6 @@ $has   = $model->hasMedia('images');                    // boolean check
 ```
 
 ### Getting URLs
-
 ```php
 $url     = $model->getFirstMediaUrl('images');           // original URL
 $thumbUrl = $model->getFirstMediaUrl('images', 'thumb'); // conversion URL
@@ -271,14 +259,12 @@ $lastUrl  = $model->getLastMediaUrl('images', 'thumb');
 ```
 
 ### Getting paths
-
 ```php
 $path     = $model->getFirstMediaPath('images');
 $thumbPath = $model->getFirstMediaPath('images', 'thumb');
 ```
 
 ### Temporary URLs (S3)
-
 ```php
 $tempUrl = $model->getFirstTemporaryUrl(
     now()->addMinutes(30),
@@ -288,13 +274,11 @@ $tempUrl = $model->getFirstTemporaryUrl(
 ```
 
 ### Fallback URLs
-
 ```php
 $url = $model->getFallbackMediaUrl('avatar');
 ```
 
 ### From the Media model
-
 ```php
 $media = $model->getFirstMedia('images');
 
@@ -307,7 +291,6 @@ $media->hasGeneratedConversion('thumb');  // check if conversion exists
 ```
 
 ### Filtering media
-
 ```php
 $media = $model->getMedia('images', function (Media $media) {
     return $media->getCustomProperty('featured') === true;
@@ -360,7 +343,6 @@ $this->addMediaCollection('photos')
 ```
 
 ### Using in Blade
-
 ```blade
 {{-- Renders img tag with srcset --}}
 {{ $media->toHtml() }}
@@ -376,7 +358,6 @@ $this->addMediaCollection('photos')
 ```
 
 ### Placeholder SVG
-
 ```php
 $svg = $media->responsiveImages()->getPlaceholderSvg(); // tiny blurred base64 placeholder
 ```
@@ -384,43 +365,36 @@ $svg = $media->responsiveImages()->getPlaceholderSvg(); // tiny blurred base64 p
 ## Managing Media
 
 ### Clear a collection
-
 ```php
 $model->clearMediaCollection('images');
 ```
 
 ### Clear except specific items
-
 ```php
 $model->clearMediaCollectionExcept('images', $mediaToKeep);
 ```
 
 ### Delete specific media
-
 ```php
 $model->deleteMedia($mediaId);
 ```
 
 ### Delete all media
-
 ```php
 $model->deleteAllMedia();
 ```
 
 ### Delete model but keep media files
-
 ```php
 $model->deletePreservingMedia();
 ```
 
 ### Reorder media
-
 ```php
 Media::setNewOrder([3, 1, 2]); // media IDs in desired order
 ```
 
 ### Move/copy media between models
-
 ```php
 $media->move($otherModel, 'images');
 $media->copy($otherModel, 'images');
@@ -533,7 +507,6 @@ Register in config: `'media_model' => App\Models\Media::class`
 ## Downloading Media
 
 ### Single file
-
 ```php
 return $media->toResponse($request); // download
 return $media->toInlineResponse($request); // display inline
@@ -541,7 +514,6 @@ return $media->stream(); // stream
 ```
 
 ### ZIP download of collection
-
 ```php
 use Spatie\MediaLibrary\Support\MediaStream;
 

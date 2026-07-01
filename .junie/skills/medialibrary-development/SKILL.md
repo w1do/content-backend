@@ -9,22 +9,18 @@ metadata:
 # Media Library Development
 
 ## Overview
-
 Use spatie/laravel-medialibrary to associate files with Eloquent models. Supports image/video conversions, responsive images, multiple collections, and various storage disks.
 
 ## When to Activate
-
 - Activate when working with file uploads, media attachments, or image processing in Laravel.
 - Activate when code references `HasMedia`, `InteractsWithMedia`, the `Media` model, or media collections/conversions.
 - Activate when the user wants to add, retrieve, convert, or manage files attached to Eloquent models.
 
 ## Scope
-
 - In scope: media uploads, collections, conversions, responsive images, custom properties, file retrieval, path/URL generation.
 - Out of scope: general file storage without Eloquent association, non-Laravel frameworks.
 
 ## Workflow
-
 1. Identify the task (model setup, adding media, defining conversions, retrieving files, etc.).
 2. Read `references/medialibrary-guide.md` and focus on the relevant section.
 3. Apply the patterns from the reference, keeping code minimal and Laravel-native.
@@ -32,7 +28,6 @@ Use spatie/laravel-medialibrary to associate files with Eloquent models. Support
 ## Core Concepts
 
 ### Model Setup
-
 Every model that should have media must implement `HasMedia` and use the `InteractsWithMedia` trait:
 
 ```php
@@ -46,7 +41,6 @@ class BlogPost extends Model implements HasMedia
 ```
 
 ### Adding Media
-
 ```php
 $blogPost->addMedia($file)->toMediaCollection('images');
 $blogPost->addMediaFromUrl($url)->toMediaCollection('images');
@@ -54,7 +48,6 @@ $blogPost->addMediaFromRequest('file')->toMediaCollection('images');
 ```
 
 ### Defining Collections
-
 ```php
 public function registerMediaCollections(): void
 {
@@ -64,7 +57,6 @@ public function registerMediaCollections(): void
 ```
 
 ### Defining Conversions
-
 ```php
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
@@ -78,7 +70,6 @@ public function registerMediaConversions(?Media $media = null): void
 ```
 
 ### Retrieving Media
-
 ```php
 $url = $model->getFirstMediaUrl('images');
 $thumbUrl = $model->getFirstMediaUrl('images', 'thumb');
@@ -102,5 +93,4 @@ Don't:
 - Don't reference conversion names that aren't registered in `registerMediaConversions()`.
 
 ## References
-
 - `references/medialibrary-guide.md`
