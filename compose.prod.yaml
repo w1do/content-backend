@@ -1,5 +1,5 @@
 services:
-    app-botsync:
+    app-backend-gaz:
         build:
             context: .
             dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
             - '80'
         labels:
             - 'traefik.enable=true'
-            - 'traefik.http.routers.botsync.rule=Host(`lk.botsync.ru`) || Host(`api.botsync.ru`)'
+            - 'traefik.http.routers.botsync.rule=Host(`api.gaztochka.ru`) || Host(`admin.gaztochka.ru`)'
             - 'traefik.http.routers.botsync.entrypoints=websecure'
             - 'traefik.http.routers.botsync.tls.certresolver=letsencrypt'
             - 'traefik.http.services.botsync.loadbalancer.server.port=80'

@@ -9,14 +9,29 @@
     "sail": false,
     "skills": [
         "laravel-best-practices",
+        "configuring-horizon",
         "pest-testing",
+        "inertia-react-development",
         "tailwindcss-development",
+        "architecture-ddd",
+        "documentation",
+        "dtos",
+        "laravel-activitylog",
         "laravel-query-builder",
+        "lazychaser-laravel-nestedset",
         "medialibrary-development",
         "sluggable-development",
-        "architecture-ddd",
-        "laravel-activitylog",
-        "dtos",
-        "documentation"
+        "olakunlevpn-filament-skills",
+        "spatie-javascript",
+        "spatie-laravel-php",
+        "spatie-security",
+        "spatie-version-control",
+        "laravel-deploy",
+        "refactoring-ddd",
+        "polza-ai",
+        "design-prototype",
+        "moffhub-billing",
+        "laravel-plans",
+        "laravel-package-tools"
     ]
 }
