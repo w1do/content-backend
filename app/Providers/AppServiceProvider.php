@@ -8,6 +8,7 @@ use App\Domain\Repositories\ProductRepositoryInterface;
 use App\Infrastructure\Persistence\Repositories\EloquentCategoryRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentContentRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentProductRepository;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +42,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if ($this->app->environment('production')) {
+            URL::forceHttps();
+        }
     }
 }
