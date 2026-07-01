@@ -5,13 +5,13 @@ services:
             dockerfile: Dockerfile
             args:
                 CACHEBUST: ${CACHEBUST:-1}
-        image: rag-system:latest
+        image: backend-gaztochka:latest
         restart: unless-stopped
         expose:
             - '80'
         labels:
             - 'traefik.enable=true'
-            - 'traefik.http.routers.botsync.rule=Host(`api.gaztochka.ru`) || Host(`admin.gaztochka.ru`)'
+            - 'traefik.http.routers.botsync.rule=Host(`backend.gaztochka.ru`)'
             - 'traefik.http.routers.botsync.entrypoints=websecure'
             - 'traefik.http.routers.botsync.tls.certresolver=letsencrypt'
             - 'traefik.http.services.botsync.loadbalancer.server.port=80'
