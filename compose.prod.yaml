@@ -11,10 +11,14 @@ services:
             - '80'
         labels:
             - 'traefik.enable=true'
-            - 'traefik.http.routers.botsync.rule=Host(`backend.gaztochka.ru`)'
-            - 'traefik.http.routers.botsync.entrypoints=websecure'
-            - 'traefik.http.routers.botsync.tls.certresolver=letsencrypt'
-            - 'traefik.http.services.botsync.loadbalancer.server.port=80'
+            - 'traefik.http.routers.backend_gaz.rule=Host(`backend.gaztochka.ru`)'
+            - 'traefik.http.routers.backend_gaz.entrypoints=websecure'
+            - 'traefik.http.routers.backend_gaz.tls.certresolver=letsencrypt'
+            - 'traefik.http.services.backend_gaz.loadbalancer.server.port=80'
+            - 'traefik.http.routers.backend_gaz_http.rule=Host(`backend.gaztochka.ru`)'
+            - 'traefik.http.routers.backend_gaz_http.entrypoints=web'
+            - 'traefik.http.routers.backend_gaz_http.middlewares=redirect-to-https'
+            - 'traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https'
         env_file:
             - .env
         environment:
