@@ -42,7 +42,7 @@ WORKDIR /var/www/html
 RUN apk add --no-cache libzip libpng libpq icu-libs sqlite-libs \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS libzip-dev libpng-dev postgresql-dev icu-dev zlib-dev sqlite-dev \
-    && docker-php-ext-install bcmath pdo_sqlite pdo_pgsql zip pcntl \
+    && docker-php-ext-install bcmath intl pdo_sqlite pdo_pgsql zip pcntl \
     && pecl install redis && docker-php-ext-enable redis \
     && apk del .build-deps
 
@@ -54,7 +54,7 @@ RUN composer install --no-scripts --no-autoloader --prefer-dist --ignore-platfor
 COPY . .
 RUN composer dump-autoload
 
-RUN php artisan test --no-ansi --exclude-group slow
+RUN cp .env.example .env && php artisan key:generate && php artisan test --no-ansi --exclude-group slow
 
 # Stage 4: Final Production Image
 FROM php:8.5-fpm-alpine
