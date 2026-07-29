@@ -53,6 +53,44 @@
                 ],
                 "summary": "Получить список всех категорий",
                 "operationId": "4aed8169864e0b796b0ca9e85d852c15",
+                "parameters": [
+                    {
+                        "name": "filter[id]",
+                        "in": "query",
+                        "description": "Фильтр по ID (можно передать несколько через запятую)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[name]",
+                        "in": "query",
+                        "description": "Фильтр по названию (частичное совпадение)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[slug]",
+                        "in": "query",
+                        "description": "Фильтр по слагу (точное совпадение)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[full_path]",
+                        "in": "query",
+                        "description": "Фильтр по полному пути (точное совпадение)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список категорий",

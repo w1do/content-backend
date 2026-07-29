@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories;
 
+use App\Application\DTO\CategoryFilterDTO;
 use App\Domain\Entities\Category;
 
 interface CategoryRepositoryInterface
@@ -9,7 +10,7 @@ interface CategoryRepositoryInterface
     /**
      * @return Category[]
      */
-    public function findAll(): array;
+    public function findAll(?CategoryFilterDTO $filters = null): array;
 
     /**
      * @return Category[]

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controllers\Api\V1;
 
+use App\Application\DTO\CategoryFilterDTO;
 use App\Application\Handlers\Categories\GetBreadcrumbsHandler;
 use App\Application\Handlers\Categories\GetCategoriesHandler;
 use App\Application\Handlers\Categories\GetCategoryByIdHandler;
@@ -28,6 +29,36 @@ final class CategoryController extends Controller
         path: '/api/v1/categories',
         summary: 'Получить список всех категорий',
         tags: ['Categories'],
+        parameters: [
+            new OA\Parameter(
+                name: 'filter[id]',
+                description: 'Фильтр по ID (можно передать несколько через запятую)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'filter[name]',
+                description: 'Фильтр по названию (частичное совпадение)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'filter[slug]',
+                description: 'Фильтр по слагу (точное совпадение)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'filter[full_path]',
+                description: 'Фильтр по полному пути (точное совпадение)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -39,9 +70,10 @@ final class CategoryController extends Controller
             ),
         ]
     )]
-    public function index(GetCategoriesHandler $handler): AnonymousResourceCollection
+    public function index(Request $request, GetCategoriesHandler $handler): AnonymousResourceCollection
     {
-        $categories = $handler->handle(new GetCategoriesQuery);
+        $filters = CategoryFilterDTO::from($request->input('filter', []));
+        $categories = $handler->handle(new GetCategoriesQuery($filters));
 
         return CategoryResource::collection($categories);
     }

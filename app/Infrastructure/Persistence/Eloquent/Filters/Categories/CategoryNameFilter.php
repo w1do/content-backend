@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Infrastructure\Persistence\Eloquent\Filters\Categories;
+
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\QueryBuilder\Filters\Filter;
+
+/**
+ * Фильтр для частичного поиска по названию категории.
+ */
+class CategoryNameFilter implements Filter
+{
+    public function __invoke(Builder $query, mixed $value, string $property): void
+    {
+        $query->where('name', 'LIKE', '%'.$value.'%');
+    }
+}

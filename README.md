@@ -11,6 +11,7 @@
 - **Database**: PostgreSQL (поддержка иерархии через `kalnoy/nestedset`)
 - **API Documentation**: [Swagger (OpenAPI 3.0)](https://github.com/DarkaOnLine/L5-Swagger)
 - **Architecture**: DDD (Domain-Driven Design), CQRS (Command Query Responsibility Segregation)
+- **Caching**: Redis (Decorator pattern + Tag-based invalidation)
 - **Testing**: [Pest v4](https://pestphp.com/)
 - **Code Style**: Laravel Pint
 
@@ -63,6 +64,7 @@ composer install
 Подробные описания модулей находятся в папке `docs/`:
 - [Иерархия категорий](docs/categories.md)
 - [Система товаров](docs/products.md)
+- [Система кеширования](docs/caching.md)
 - [Контент и CMS](docs/contents.md)
 - [Сводка изменений](docs/summary.md)
 

@@ -2,19 +2,39 @@
 
 namespace App\Infrastructure\Persistence\Repositories;
 
+use App\Application\DTO\CategoryFilterDTO;
 use App\Domain\Entities\Category as CategoryEntity;
 use App\Domain\Repositories\CategoryRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Category as CategoryModel;
+use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategoryFullPathFilter;
+use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategoryIdFilter;
+use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategoryNameFilter;
+use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategorySlugFilter;
+use Illuminate\Http\Request;
 use Kalnoy\Nestedset\Collection;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EloquentCategoryRepository implements CategoryRepositoryInterface
 {
     /**
      * @return CategoryEntity[]
      */
-    public function findAll(): array
+    public function findAll(?CategoryFilterDTO $filters = null): array
     {
-        return CategoryModel::defaultOrder()
+        $request = $filters
+            ? new Request(['filter' => array_filter($filters->toArray())])
+            : request();
+
+        return QueryBuilder::for(CategoryModel::class, $request)
+            ->with('children')
+            ->allowedFilters(
+                AllowedFilter::custom('id', new CategoryIdFilter),
+                AllowedFilter::custom('name', new CategoryNameFilter),
+                AllowedFilter::custom('slug', new CategorySlugFilter),
+                AllowedFilter::custom('full_path', new CategoryFullPathFilter),
+            )
+            ->defaultOrder()
             ->get()
             ->map(fn (CategoryModel $model) => $this->toEntity($model))
             ->toArray();
@@ -37,14 +57,14 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
 
     public function findById(int $id): ?CategoryEntity
     {
-        $model = CategoryModel::find($id);
+        $model = CategoryModel::with('children')->find($id);
 
         return $model ? $this->toEntity($model) : null;
     }
 
     public function findBySlug(string $slug): ?CategoryEntity
     {
-        $model = CategoryModel::where('slug', $slug)->first();
+        $model = CategoryModel::with('children')->where('slug', $slug)->first();
 
         return $model ? $this->toEntity($model) : null;
     }
