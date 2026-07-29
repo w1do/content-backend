@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 uses(TestCase::class);
 
-test('it can search for images and return first result', function () {
+test('it can search for images and return results', function () {
     Config::set('services.serp_api.key', 'test_key');
 
     Http::fake([
@@ -23,15 +23,16 @@ test('it can search for images and return first result', function () {
     ]);
 
     $provider = new SerpApiImageSearchProvider;
-    $result = $provider->search('coffee');
+    $results = $provider->search('coffee');
 
-    expect($result)->not->toBeNull()
-        ->and($result->url)->toBe('https://example.com/image.jpg')
-        ->and($result->title)->toBe('Example Image')
-        ->and($result->source)->toBe('Example Source');
+    expect($results)->toBeArray()
+        ->and($results)->toHaveCount(1)
+        ->and($results[0]->url)->toBe('https://example.com/image.jpg')
+        ->and($results[0]->title)->toBe('Example Image')
+        ->and($results[0]->source)->toBe('Example Source');
 });
 
-test('it returns null if no results found', function () {
+test('it returns empty array if no results found', function () {
     Config::set('services.serp_api.key', 'test_key');
 
     Http::fake([
@@ -43,14 +44,16 @@ test('it returns null if no results found', function () {
     $provider = new SerpApiImageSearchProvider;
     $result = $provider->search('nothing');
 
-    expect($result)->toBeNull();
+    expect($result)->toBeArray()
+        ->and($result)->toBeEmpty();
 });
 
-test('it returns null if api key is missing', function () {
+test('it returns empty array if api key is missing', function () {
     Config::set('services.serp_api.key', null);
 
     $provider = new SerpApiImageSearchProvider;
     $result = $provider->search('coffee');
 
-    expect($result)->toBeNull();
+    expect($result)->toBeArray()
+        ->and($result)->toBeEmpty();
 });

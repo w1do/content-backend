@@ -19,17 +19,17 @@ class SerpApiImageSearchProvider implements ImageSearchProviderInterface
     }
 
     /**
-     * Search for an image based on a query using SerpApi Google Images engine.
+     * Search for images based on a query using SerpApi Google Images engine.
      *
      * @param  string  $query  The search query.
-     * @return ImageSearchResult|null The search result or null if not found/error.
+     * @return ImageSearchResult[] The search results.
      */
-    public function search(string $query): ?ImageSearchResult
+    public function search(string $query): array
     {
         if (empty($this->apiKey)) {
             Log::error('SerpApi key is missing.');
 
-            return null;
+            return [];
         }
 
         try {
@@ -46,31 +46,31 @@ class SerpApiImageSearchProvider implements ImageSearchProviderInterface
                     'body' => $response->body(),
                 ]);
 
-                return null;
+                return [];
             }
 
             $data = $response->json();
             $imageResults = $data['images_results'] ?? [];
 
             if (empty($imageResults)) {
-                return null;
+                return [];
             }
 
-            // Get the first result
-            $firstResult = $imageResults[0];
-
-            return new ImageSearchResult(
-                url: $firstResult['original'] ?? $firstResult['thumbnail'],
-                title: $firstResult['title'] ?? null,
-                source: $firstResult['source'] ?? null,
-            );
+            return collect($imageResults)
+                ->take(12)
+                ->map(fn (array $item) => new ImageSearchResult(
+                    url: $item['original'] ?? $item['thumbnail'],
+                    title: $item['title'] ?? null,
+                    source: $item['source'] ?? null,
+                ))
+                ->all();
         } catch (\Exception $e) {
             Log::error('SerpApi exception.', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            return null;
+            return [];
         }
     }
 }

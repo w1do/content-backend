@@ -7,7 +7,9 @@ use App\Application\DTO\ImageSearchResult;
 interface ImageSearchProviderInterface
 {
     /**
-     * Search for an image based on a query.
+     * Search for images based on a query.
+     *
+     * @return ImageSearchResult[]
      */
-    public function search(string $query): ?ImageSearchResult;
+    public function search(string $query): array;
 }

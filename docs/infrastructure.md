@@ -16,8 +16,11 @@
 - **Интерфейс**: `App\Domain\Services\ImageSearchProviderInterface`.
 - **Реализация**: `App\Infrastructure\Services\SerpApiImageSearchProvider`.
 - **DTO**: `App\Application\DTO\ImageSearchResult`.
-- **Filament Action**: `App\Filament\Actions\SearchImageAction` — переиспользуемый компонент для форм, который позволяет искать изображения по названию и прикреплять их к модели через Spatie MediaLibrary.
+- **Filament Action**: `App\Filament\Actions\SearchImageAction` — переиспользуемый компонент для форм.
+    - Использует кастомный `ViewField` для выбора изображения из сетки.
+    - Поддерживает автоматическое именование файлов.
 - **Handler**: `App\Application\Handlers\Media\AttachImageFromUrlHandler` — отвечает за загрузку и прикрепление изображения.
+- **Подробности**: См. [Поиск изображений](features/image_search.md).
 
 ## Парсеры товаров (mirgaza.ru)
 Реализована система автоматического заполнения данных о товаре по ссылке.
