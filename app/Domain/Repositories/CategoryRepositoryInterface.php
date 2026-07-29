@@ -8,16 +8,20 @@ use App\Domain\Entities\Category;
 interface CategoryRepositoryInterface
 {
     /**
+     * @param  string[]  $includes
      * @return Category[]
      */
-    public function findAll(?CategoryFilterDTO $filters = null): array;
+    public function findAll(?CategoryFilterDTO $filters = null, array $includes = []): array;
 
     /**
      * @return Category[]
      */
     public function findTree(): array;
 
-    public function findById(int $id): ?Category;
+    /**
+     * @param  string[]  $includes
+     */
+    public function findById(int $id, array $includes = []): ?Category;
 
     public function findBySlug(string $slug): ?Category;
 

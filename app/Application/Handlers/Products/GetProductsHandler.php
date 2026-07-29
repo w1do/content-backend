@@ -13,6 +13,6 @@ class GetProductsHandler
 
     public function handle(GetProductsQuery $query): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findAll($query->filters);
     }
 }

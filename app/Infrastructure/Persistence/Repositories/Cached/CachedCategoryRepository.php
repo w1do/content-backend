@@ -21,9 +21,9 @@ class CachedCategoryRepository implements CategoryRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findAll(?CategoryFilterDTO $filters = null): array
+    public function findAll(?CategoryFilterDTO $filters = null, array $includes = []): array
     {
-        if ($filters === null) {
+        if ($filters === null && empty($includes)) {
             return $this->cache->remember(
                 $this->keyGenerator->generate($this->entity, __FUNCTION__),
                 [$this->getTags()],
@@ -32,7 +32,7 @@ class CachedCategoryRepository implements CategoryRepositoryInterface
             );
         }
 
-        return $this->repository->findAll($filters);
+        return $this->repository->findAll($filters, $includes);
     }
 
     /**
@@ -51,14 +51,18 @@ class CachedCategoryRepository implements CategoryRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findById(int $id): ?Category
+    public function findById(int $id, array $includes = []): ?Category
     {
-        return $this->cache->remember(
-            $this->keyGenerator->generate($this->entity, __FUNCTION__, [$id]),
-            [$this->getTags()],
-            fn () => $this->repository->findById($id),
-            config('caching.ttls.category')
-        );
+        if (empty($includes)) {
+            return $this->cache->remember(
+                $this->keyGenerator->generate($this->entity, __FUNCTION__, [$id]),
+                [$this->getTags()],
+                fn () => $this->repository->findById($id),
+                config('caching.ttls.category')
+            );
+        }
+
+        return $this->repository->findById($id, $includes);
     }
 
     /**

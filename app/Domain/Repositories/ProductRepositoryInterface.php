@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories;
 
+use App\Application\DTO\ProductFilterDTO;
 use App\Domain\Entities\Product;
 
 interface ProductRepositoryInterface
@@ -9,7 +10,7 @@ interface ProductRepositoryInterface
     /**
      * @return Product[]
      */
-    public function findAll(): array;
+    public function findAll(?ProductFilterDTO $filters = null): array;
 
     /**
      * @param  int[]  $categoryIds

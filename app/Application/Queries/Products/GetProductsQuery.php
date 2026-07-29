@@ -2,4 +2,11 @@
 
 namespace App\Application\Queries\Products;
 
-class GetProductsQuery {}
+use App\Application\DTO\ProductFilterDTO;
+
+class GetProductsQuery
+{
+    public function __construct(
+        public ?ProductFilterDTO $filters = null
+    ) {}
+}

@@ -5,6 +5,7 @@ namespace App\Application\Queries\Categories;
 class GetCategoryByIdQuery
 {
     public function __construct(
-        public int $id
+        public int $id,
+        public array $includes = [],
     ) {}
 }

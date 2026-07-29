@@ -2,19 +2,39 @@
 
 namespace App\Infrastructure\Persistence\Repositories;
 
+use App\Application\DTO\ProductFilterDTO;
 use App\Domain\Entities\Product as ProductEntity;
 use App\Domain\Repositories\ProductRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Category;
+use App\Infrastructure\Persistence\Eloquent\Filters\Products\ProductCategoryFullPathFilter;
+use App\Infrastructure\Persistence\Eloquent\Filters\Products\ProductCategoryIdFilter;
+use App\Infrastructure\Persistence\Eloquent\Filters\Products\ProductCategoryNameFilter;
 use App\Infrastructure\Persistence\Eloquent\Product as ProductModel;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EloquentProductRepository implements ProductRepositoryInterface
 {
     /**
      * @return ProductEntity[]
      */
-    public function findAll(): array
+    public function findAll(?ProductFilterDTO $filters = null): array
     {
-        return ProductModel::with('categories')->get()->map(fn (ProductModel $model) => $this->toEntity($model))->toArray();
+        $request = $filters
+            ? new Request(['filter' => array_filter($filters->toArray())])
+            : request();
+
+        return QueryBuilder::for(ProductModel::class, $request)
+            ->with('categories')
+            ->allowedFilters(
+                AllowedFilter::custom('category_id', new ProductCategoryIdFilter),
+                AllowedFilter::custom('category_name', new ProductCategoryNameFilter),
+                AllowedFilter::custom('category_full_path', new ProductCategoryFullPathFilter),
+            )
+            ->get()
+            ->map(fn (ProductModel $model) => $this->toEntity($model))
+            ->toArray();
     }
 
     public function findByCategories(array $categoryIds): array

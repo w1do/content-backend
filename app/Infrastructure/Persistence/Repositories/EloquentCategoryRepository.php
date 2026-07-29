@@ -13,20 +13,28 @@ use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategorySlugFilte
 use Illuminate\Http\Request;
 use Kalnoy\Nestedset\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EloquentCategoryRepository implements CategoryRepositoryInterface
 {
     /**
+     * @param  string[]  $includes
      * @return CategoryEntity[]
      */
-    public function findAll(?CategoryFilterDTO $filters = null): array
+    public function findAll(?CategoryFilterDTO $filters = null, array $includes = []): array
     {
-        $request = $filters
-            ? new Request(['filter' => array_filter($filters->toArray())])
-            : request();
+        $params = [];
+        if ($filters) {
+            $params['filter'] = array_filter($filters->toArray());
+        }
+        if (! empty($includes)) {
+            $params['include'] = implode(',', $includes);
+        }
 
-        return QueryBuilder::for(CategoryModel::class, $request)
+        $request = new Request($params);
+
+        $query = QueryBuilder::for(CategoryModel::class, $request)
             ->with('children')
             ->allowedFilters(
                 AllowedFilter::custom('id', new CategoryIdFilter),
@@ -34,8 +42,13 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
                 AllowedFilter::custom('slug', new CategorySlugFilter),
                 AllowedFilter::custom('full_path', new CategoryFullPathFilter),
             )
-            ->defaultOrder()
-            ->get()
+            ->allowedIncludes(
+                AllowedInclude::count('products', 'products'),
+            );
+
+        $results = $query->defaultOrder()->get();
+
+        return $results
             ->map(fn (CategoryModel $model) => $this->toEntity($model))
             ->toArray();
     }
@@ -55,9 +68,25 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
             ->toArray();
     }
 
-    public function findById(int $id): ?CategoryEntity
+    /**
+     * @param  string[]  $includes
+     */
+    public function findById(int $id, array $includes = []): ?CategoryEntity
     {
-        $model = CategoryModel::with('children')->find($id);
+        $params = [];
+        if (! empty($includes)) {
+            $params['include'] = implode(',', $includes);
+        }
+
+        $request = new Request($params);
+
+        /** @var CategoryModel|null $model */
+        $model = QueryBuilder::for(CategoryModel::class, $request)
+            ->with('children')
+            ->allowedIncludes(
+                AllowedInclude::count('products', 'products'),
+            )
+            ->find($id);
 
         return $model ? $this->toEntity($model) : null;
     }
@@ -128,6 +157,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
             children: $model->relationLoaded('children')
                 ? $model->children->map(fn (CategoryModel $child) => $this->toEntity($child))->toArray()
                 : [],
+            productsCount: isset($model->products_count) ? (int) $model->products_count : (isset($model->products) && is_numeric($model->products) ? (int) $model->products : null),
         );
     }
 }

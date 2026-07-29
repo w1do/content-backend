@@ -28,6 +28,7 @@ use OpenApi\Attributes as OA;
             items: new OA\Items(ref: '#/components/schemas/CategoryResource'),
             nullable: true
         ),
+        new OA\Property(property: 'products_count', type: 'integer', nullable: true, example: 5),
     ]
 )]
 class CategoryResource extends JsonResource
@@ -48,6 +49,7 @@ class CategoryResource extends JsonResource
             'status' => $this->status,
             'description' => $this->description,
             'children' => $this->resolveChildren(),
+            'products_count' => $this->when(isset($this->productsCount), $this->productsCount),
         ];
     }
 

@@ -15,7 +15,7 @@ class GetCategoryByIdHandler
 
     public function handle(GetCategoryByIdQuery $query): Category
     {
-        $category = $this->repository->findById($query->id);
+        $category = $this->repository->findById($query->id, $query->includes);
 
         if (! $category) {
             throw new EntityNotFoundException('Category', (string) $query->id);

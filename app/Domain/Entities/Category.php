@@ -16,5 +16,6 @@ class Category
         public string $fullPath,
         public ?string $description = null,
         public array $children = [],
+        public ?int $productsCount = null,
     ) {}
 }

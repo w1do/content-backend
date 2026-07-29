@@ -58,6 +58,13 @@ final class CategoryController extends Controller
                 required: false,
                 schema: new OA\Schema(type: 'string')
             ),
+            new OA\Parameter(
+                name: 'include',
+                description: 'Включить связанные данные (доступно: products)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
         ],
         responses: [
             new OA\Response(
@@ -73,7 +80,8 @@ final class CategoryController extends Controller
     public function index(Request $request, GetCategoriesHandler $handler): AnonymousResourceCollection
     {
         $filters = CategoryFilterDTO::from($request->input('filter', []));
-        $categories = $handler->handle(new GetCategoriesQuery($filters));
+        $includes = explode(',', (string) $request->query('include', ''));
+        $categories = $handler->handle(new GetCategoriesQuery($filters, array_filter($includes)));
 
         return CategoryResource::collection($categories);
     }
@@ -106,6 +114,13 @@ final class CategoryController extends Controller
         tags: ['Categories'],
         parameters: [
             new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(
+                name: 'include',
+                description: 'Включить связанные данные (доступно: products)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
         ],
         responses: [
             new OA\Response(
@@ -116,9 +131,10 @@ final class CategoryController extends Controller
             new OA\Response(response: 404, description: 'Категория не найдена'),
         ]
     )]
-    public function show(string $id, GetCategoryByIdHandler $handler): CategoryResource
+    public function show(Request $request, string $id, GetCategoryByIdHandler $handler): CategoryResource
     {
-        $category = $handler->handle(new GetCategoryByIdQuery((int) $id));
+        $includes = explode(',', (string) $request->query('include', ''));
+        $category = $handler->handle(new GetCategoryByIdQuery((int) $id, array_filter($includes)));
 
         return new CategoryResource($category);
     }

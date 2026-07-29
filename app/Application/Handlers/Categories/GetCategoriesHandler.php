@@ -13,6 +13,6 @@ class GetCategoriesHandler
 
     public function handle(GetCategoriesQuery $query): array
     {
-        return $this->repository->findAll($query->filters);
+        return $this->repository->findAll($query->filters, $query->includes);
     }
 }

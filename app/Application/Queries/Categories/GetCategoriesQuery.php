@@ -7,6 +7,7 @@ use App\Application\DTO\CategoryFilterDTO;
 class GetCategoriesQuery
 {
     public function __construct(
-        public ?CategoryFilterDTO $filters = null
+        public ?CategoryFilterDTO $filters = null,
+        public array $includes = [],
     ) {}
 }

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controllers\Api\V1;
 
+use App\Application\DTO\ProductFilterDTO;
 use App\Application\Handlers\Products\GetProductByIdHandler;
 use App\Application\Handlers\Products\GetProductsHandler;
 use App\Application\Queries\Products\GetProductByIdQuery;
 use App\Application\Queries\Products\GetProductsQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;
 
@@ -20,6 +22,29 @@ final class ProductController extends Controller
         path: '/api/v1/products',
         summary: 'Получить список всех товаров',
         tags: ['Products'],
+        parameters: [
+            new OA\Parameter(
+                name: 'filter[category_id]',
+                description: 'Фильтр по ID категории (можно передать несколько через запятую)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'filter[category_name]',
+                description: 'Фильтр по названию категории (частичное совпадение)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'filter[category_full_path]',
+                description: 'Фильтр по полному пути категории (точное совпадение)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -31,9 +56,10 @@ final class ProductController extends Controller
             ),
         ]
     )]
-    public function index(GetProductsHandler $handler): AnonymousResourceCollection
+    public function index(Request $request, GetProductsHandler $handler): AnonymousResourceCollection
     {
-        $products = $handler->handle(new GetProductsQuery);
+        $filters = ProductFilterDTO::from($request->input('filter', []));
+        $products = $handler->handle(new GetProductsQuery($filters));
 
         return ProductResource::collection($products);
     }

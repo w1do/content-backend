@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Repositories\Cached;
 
+use App\Application\DTO\ProductFilterDTO;
 use App\Domain\Entities\Product;
 use App\Domain\Repositories\ProductRepositoryInterface;
 use App\Infrastructure\Caching\CacheServiceInterface;
@@ -20,14 +21,18 @@ class CachedProductRepository implements ProductRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findAll(): array
+    public function findAll(?ProductFilterDTO $filters = null): array
     {
-        return $this->cache->remember(
-            $this->keyGenerator->generate($this->entity, __FUNCTION__),
-            [$this->getTags()],
-            fn () => $this->repository->findAll(),
-            config('caching.ttls.product')
-        );
+        if ($filters === null) {
+            return $this->cache->remember(
+                $this->keyGenerator->generate($this->entity, __FUNCTION__),
+                [$this->getTags()],
+                fn () => $this->repository->findAll(),
+                config('caching.ttls.product')
+            );
+        }
+
+        return $this->repository->findAll($filters);
     }
 
     /**
