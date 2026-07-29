@@ -1,28 +1,60 @@
 <?php
 
+use App\Application\Commands\Media\AttachImageFromUrlCommand;
 use App\Application\Handlers\Media\AttachImageFromUrlHandler;
 use App\Infrastructure\Persistence\Eloquent\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Spatie\Image\Image;
 use Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class);
 
-test('it can attach image from url to model', function () {
-    // Create a temporary file to simulate the download
-    $tempFile = tempnam(sys_get_temp_dir(), 'test_image');
-    file_put_contents($tempFile, 'fake-image-content');
+function fakeJpegBytes(int $width, int $height): string
+{
+    $image = imagecreatetruecolor($width, $height);
+    imagefill($image, 0, 0, imagecolorallocate($image, 120, 160, 200));
+
+    ob_start();
+    imagejpeg($image);
+    $bytes = ob_get_clean();
+    imagedestroy($image);
+
+    return $bytes;
+}
+
+test('it attaches image from url resized to 800x800', function () {
+    Http::fake([
+        'example.com/*' => Http::response(fakeJpegBytes(1200, 400), 200),
+    ]);
 
     $product = Product::factory()->create();
 
-    // We'll mock the handler to use addMedia instead of addMediaFromUrl for the test,
-    // or better, just test that it calls the method.
-    // Actually, let's keep it as is and just verify the file was added if we use a real URL that exists?
-    // No, we can't do that.
+    $media = (new AttachImageFromUrlHandler)->handle(new AttachImageFromUrlCommand(
+        model: $product,
+        imageUrl: 'https://example.com/photo.png',
+        collectionName: 'main',
+        fileName: 'test-product.png',
+        clearCollection: true,
+    ));
 
-    // Let's use a local path and addMedia in the handler if we want to test the full flow,
-    // but the handler specifically uses addMediaFromUrl.
+    expect($media->file_name)->toBe('test-product.jpg');
 
-    // I'll just assert that the handler exists and has the handle method.
-    $handler = new AttachImageFromUrlHandler;
-    expect(method_exists($handler, 'handle'))->toBeTrue();
+    $image = Image::load($media->getPath());
+
+    expect($image->getWidth())->toBe(800)
+        ->and($image->getHeight())->toBe(800);
+});
+
+test('it throws when image cannot be downloaded', function () {
+    Http::fake([
+        'example.com/*' => Http::response('', 404),
+    ]);
+
+    $product = Product::factory()->create();
+
+    expect(fn () => (new AttachImageFromUrlHandler)->handle(new AttachImageFromUrlCommand(
+        model: $product,
+        imageUrl: 'https://example.com/missing.jpg',
+    )))->toThrow(RuntimeException::class);
 });

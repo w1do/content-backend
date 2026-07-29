@@ -7,7 +7,6 @@ use App\Filament\Actions\SearchImageAction;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
-use App\Infrastructure\Persistence\Eloquent\Category;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -40,7 +39,7 @@ class CategoryForm
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)
-                                ->unique(Category::class, 'slug', ignoreRecord: true),
+                                ->unique(ignoreRecord: true),
                         ])->columns(2),
 
                         CategorySelect::make('parent_id')

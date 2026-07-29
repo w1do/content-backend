@@ -6,7 +6,6 @@ use App\Domain\Enums\ContentType;
 use App\Domain\Enums\PromptCategory;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
-use App\Infrastructure\Persistence\Eloquent\Content;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
@@ -48,7 +47,7 @@ class ContentForm
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)
-                                ->unique(Content::class, 'slug', ignoreRecord: true),
+                                ->unique(ignoreRecord: true),
 
                             Select::make('category_id')
                                 ->label('Категория')
