@@ -21,5 +21,7 @@ php artisan l5-swagger:generate --ansi --no-interaction || true
 # Create storage link if not exists
 php artisan storage:link --ansi --no-interaction || true
 
+php artisan categories:generate-full-paths
+
 # Execute the main command
 exec "$@"
