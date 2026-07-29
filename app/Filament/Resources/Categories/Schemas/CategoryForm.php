@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
+use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
+use App\Filament\Resources\Seo\Schemas\SeoSchema;
 use App\Infrastructure\Persistence\Eloquent\Category;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -45,7 +47,8 @@ class CategoryForm
 
                         RichEditor::make('description')
                             ->label('Описание')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->hintAction(SeoGenerateAction::make()),
 
                         ToggleButtons::make('status')
                             ->label('Статус')
@@ -61,6 +64,8 @@ class CategoryForm
                             ->collection('main')
                             ->image()
                             ->imageEditor(),
+
+                        SeoSchema::getSeoSection(),
                     ])->columnSpanFull(),
             ]);
     }

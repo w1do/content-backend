@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'polza_ai' => [
+        'key' => env('POLZA_AI_KEY'),
+    ],
+
 ];

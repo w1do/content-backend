@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Contents\Schemas;
 
 use App\Domain\Enums\ContentType;
+use App\Filament\Actions\SeoGenerateAction;
+use App\Filament\Resources\Seo\Schemas\SeoSchema;
 use App\Infrastructure\Persistence\Eloquent\Content;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -60,7 +62,8 @@ class ContentForm
 
                         RichEditor::make('full_text')
                             ->label('Полный текст')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->hintAction(SeoGenerateAction::make()),
 
                         Group::make([
                             TagsInput::make('tags')
@@ -72,6 +75,8 @@ class ContentForm
                                 ->default(0)
                                 ->disabled(),
                         ])->columns(2),
+
+                        SeoSchema::getSeoSection(),
                     ])->columnSpanFull(),
             ]);
     }

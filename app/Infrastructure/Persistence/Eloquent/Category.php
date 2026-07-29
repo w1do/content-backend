@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Persistence\Eloquent;
 
+use App\Application\Jobs\GenerateSeoJob;
+use App\Infrastructure\Persistence\Eloquent\Concerns\HasSeo;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,6 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection<int, self> $children
+ * @property-read Seo|null $seo
  *
  * @method static \Kalnoy\Nestedset\QueryBuilder query()
  * @method static \Kalnoy\Nestedset\QueryBuilder withDepth()
@@ -44,6 +47,7 @@ class Category extends Model implements HasMedia
     /** @use HasFactory<CategoryFactory> */
     use HasFactory;
 
+    use HasSeo;
     use HasSlug;
     use InteractsWithMedia;
     use NodeTrait {
@@ -64,6 +68,10 @@ class Category extends Model implements HasMedia
             if ($category->wasChanged('full_path')) {
                 $category->updateDescendantsFullPath();
             }
+        });
+
+        static::created(function (self $category): void {
+            GenerateSeoJob::dispatch($category)->afterCommit();
         });
     }
 

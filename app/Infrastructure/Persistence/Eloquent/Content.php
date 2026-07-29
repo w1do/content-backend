@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Enums\ContentType;
+use App\Infrastructure\Persistence\Eloquent\Concerns\HasSeo;
 use Database\Factories\ContentFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array|null $tags
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Seo|null $seo
  *
  * @mixin Builder
  */
@@ -32,6 +34,7 @@ class Content extends Model
     /** @use HasFactory<ContentFactory> */
     use HasFactory;
 
+    use HasSeo;
     use HasSlug;
 
     protected $fillable = [

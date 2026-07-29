@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Persistence\Eloquent;
 
+use App\Application\Jobs\GenerateSeoJob;
+use App\Infrastructure\Persistence\Eloquent\Concerns\HasSeo;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection<int, Category> $categories
+ * @property-read Seo|null $seo
  *
  * @mixin Builder
  */
@@ -33,8 +36,16 @@ class Product extends Model implements HasMedia
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
+    use HasSeo;
     use HasSlug;
     use InteractsWithMedia;
+
+    protected static function booted(): void
+    {
+        static::created(function (self $product): void {
+            GenerateSeoJob::dispatch($product)->afterCommit();
+        });
+    }
 
     public function registerMediaCollections(): void
     {

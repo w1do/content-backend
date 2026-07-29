@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Domain\Repositories\CategoryRepositoryInterface;
 use App\Domain\Repositories\ContentRepositoryInterface;
 use App\Domain\Repositories\ProductRepositoryInterface;
+use App\Domain\Repositories\SeoRepositoryInterface;
 use App\Domain\Services\ProductParserInterface;
 use App\Infrastructure\Caching\CacheServiceInterface;
 use App\Infrastructure\Caching\Invalidators\CategoryCacheInvalidator;
@@ -18,6 +19,7 @@ use App\Infrastructure\Persistence\Repositories\Cached\CachedProductRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentCategoryRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentContentRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentProductRepository;
+use App\Infrastructure\Persistence\Repositories\EloquentSeoRepository;
 use App\Infrastructure\Services\MirGazaProductParser;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Number;
@@ -58,6 +60,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ContentRepositoryInterface::class,
             EloquentContentRepository::class
+        );
+
+        $this->app->bind(
+            SeoRepositoryInterface::class,
+            EloquentSeoRepository::class
         );
 
         $this->app->bind(
