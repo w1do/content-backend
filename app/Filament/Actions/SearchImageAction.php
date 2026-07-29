@@ -22,6 +22,7 @@ class SearchImageAction
         return Action::make('search_image')
             ->label('Подобрать изображение')
             ->icon('heroicon-m-magnifying-glass')
+            ->color('primary')
             ->modalHeading('Предварительный просмотр изображения')
             ->modalSubmitActionLabel('Сохранить')
             ->modalWidth('lg')

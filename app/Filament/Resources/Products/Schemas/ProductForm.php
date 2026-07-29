@@ -51,7 +51,7 @@ class ProductForm
                                                 ->maxLength(255)
                                                 ->live(onBlur: true)
                                                 ->afterStateUpdated(fn (string $operation, $state, $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
-                                                ->suffixAction(SearchImageAction::make('name')),
+                                                ->hintAction(SearchImageAction::make('name')),
 
                                             TextInput::make('slug')
                                                 ->label('Слаг')
