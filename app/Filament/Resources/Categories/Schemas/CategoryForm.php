@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
+use App\Domain\Enums\PromptCategory;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
@@ -48,7 +49,7 @@ class CategoryForm
                         RichEditor::make('description')
                             ->label('Описание')
                             ->columnSpanFull()
-                            ->hintAction(SeoGenerateAction::make()),
+                            ->hintAction(SeoGenerateAction::make(PromptCategory::Category, 'name')),
 
                         ToggleButtons::make('status')
                             ->label('Статус')

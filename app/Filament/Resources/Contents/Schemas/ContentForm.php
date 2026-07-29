@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Contents\Schemas;
 
 use App\Domain\Enums\ContentType;
+use App\Domain\Enums\PromptCategory;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
 use App\Infrastructure\Persistence\Eloquent\Content;
@@ -11,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Get;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -63,7 +65,11 @@ class ContentForm
                         RichEditor::make('full_text')
                             ->label('Полный текст')
                             ->columnSpanFull()
-                            ->hintAction(SeoGenerateAction::make()),
+                            ->hintAction(SeoGenerateAction::make(fn (Get $get) => match ($get('type')) {
+                                ContentType::Blog->value => PromptCategory::Posts,
+                                ContentType::Page->value, ContentType::System->value => PromptCategory::Page,
+                                default => PromptCategory::General,
+                            }, 'name')),
 
                         Group::make([
                             TagsInput::make('tags')

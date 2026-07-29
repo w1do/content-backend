@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
+use App\Filament\Actions\SeoGenerateBulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -56,6 +57,7 @@ class ProductsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    SeoGenerateBulkAction::make(),
                     DeleteBulkAction::make(),
                 ]),
             ]);

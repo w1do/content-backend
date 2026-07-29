@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use App\Application\Handlers\Products\ParseProductFromUrlHandler;
 use App\Application\Queries\Products\ParseProductFromUrlQuery;
+use App\Domain\Enums\PromptCategory;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
@@ -62,7 +63,7 @@ class ProductForm
                                         RichEditor::make('description')
                                             ->label('Описание')
                                             ->columnSpanFull()
-                                            ->hintAction(SeoGenerateAction::make()),
+                                            ->hintAction(SeoGenerateAction::make(PromptCategory::Products, 'name')),
 
                                         KeyValue::make('attributes')
                                             ->label('Характеристики')
