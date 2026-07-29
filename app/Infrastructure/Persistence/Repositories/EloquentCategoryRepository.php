@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Repositories;
 use App\Domain\Entities\Category as CategoryEntity;
 use App\Domain\Repositories\CategoryRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Category as CategoryModel;
+use Kalnoy\Nestedset\Collection;
 
 class EloquentCategoryRepository implements CategoryRepositoryInterface
 {
@@ -26,7 +27,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
     {
         // For simple tree representation in entities, we might need a more complex toEntity
         // but for now, let's just return a flat list ordered as a tree
-        /** @var \Kalnoy\Nestedset\Collection $collection */
+        /** @var Collection $collection */
         $collection = CategoryModel::defaultOrder()->get();
 
         return $collection->toTree()
@@ -96,18 +97,17 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
 
     private function toEntity(CategoryModel $model): CategoryEntity
     {
-        $entity = new CategoryEntity(
+        return new CategoryEntity(
             id: $model->id,
             parentId: $model->parent_id,
             name: $model->name,
             slug: $model->slug,
             status: $model->status,
+            fullPath: $model->full_path ?? '',
             description: $model->description,
+            children: $model->relationLoaded('children')
+                ? $model->children->map(fn (CategoryModel $child) => $this->toEntity($child))->toArray()
+                : [],
         );
-
-        // If children are loaded, we could potentially map them too
-        // but the Domain Entity doesn't have a children property yet.
-
-        return $entity;
     }
 }

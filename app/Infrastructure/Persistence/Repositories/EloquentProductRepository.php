@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Repositories;
 
 use App\Domain\Entities\Product as ProductEntity;
 use App\Domain\Repositories\ProductRepositoryInterface;
+use App\Infrastructure\Persistence\Eloquent\Category;
 use App\Infrastructure\Persistence\Eloquent\Product as ProductModel;
 
 class EloquentProductRepository implements ProductRepositoryInterface
@@ -13,19 +14,19 @@ class EloquentProductRepository implements ProductRepositoryInterface
      */
     public function findAll(): array
     {
-        return ProductModel::all()->map(fn (ProductModel $model) => $this->toEntity($model))->toArray();
+        return ProductModel::with('categories')->get()->map(fn (ProductModel $model) => $this->toEntity($model))->toArray();
     }
 
     public function findByCategories(array $categoryIds): array
     {
-        return ProductModel::whereHas('categories', function ($query) use ($categoryIds) {
+        return ProductModel::with('categories')->whereHas('categories', function ($query) use ($categoryIds) {
             $query->whereIn('categories.id', $categoryIds);
         })->get()->map(fn (ProductModel $model) => $this->toEntity($model))->toArray();
     }
 
     public function findById(int $id): ?ProductEntity
     {
-        $model = ProductModel::find($id);
+        $model = ProductModel::with('categories')->find($id);
 
         return $model ? $this->toEntity($model) : null;
     }
@@ -62,8 +63,10 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
     private function toEntity(ProductModel $model): ProductEntity
     {
-        /** @var \App\Infrastructure\Persistence\Eloquent\Category|null $category */
-        $category = $model->categories()->first();
+        /** @var Category|null $category */
+        $category = $model->relationLoaded('categories')
+            ? $model->categories->first()
+            : $model->categories()->first();
 
         return new ProductEntity(
             id: $model->id,
@@ -72,6 +75,7 @@ class EloquentProductRepository implements ProductRepositoryInterface
             slug: $model->slug,
             description: $model->description,
             attributes: $model->attributes ?? [],
+            categoryFullPath: $category?->full_path,
         );
     }
 }

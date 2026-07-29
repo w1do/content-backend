@@ -15,6 +15,7 @@ use OpenApi\Attributes as OA;
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'category_id', type: 'integer', example: 1),
+        new OA\Property(property: 'category_full_path', type: 'string', example: 'oborudovanie/gazovoe-oborudovanie', nullable: true),
         new OA\Property(property: 'name', type: 'string', example: 'Газовый котел'),
         new OA\Property(property: 'slug', type: 'string', example: 'gazoviy-kotel'),
         new OA\Property(property: 'description', type: 'string', example: 'Описание товара', nullable: true),
@@ -33,6 +34,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'category_id' => $this->categoryId,
+            'category_full_path' => $this->categoryFullPath,
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,

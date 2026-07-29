@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000",
+            "url": "http://localhost",
             "description": "Основной сервер API"
         }
     ],
@@ -68,38 +68,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Создать новую категорию",
-                "operationId": "495d1e25b36375b432340ee0c76381e1",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CategoryDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Категория успешно создана",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CategoryResource"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Ошибка валидации"
-                    }
-                }
             }
         },
         "/api/v1/categories/tree": {
@@ -153,76 +121,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Категория не найдена"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Обновить существующую категорию",
-                "operationId": "f08e5c40d125d3c884b755921a74d048",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CategoryDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Категория успешно обновлена",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CategoryResource"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Категория не найдена"
-                    },
-                    "422": {
-                        "description": "Ошибка валидации"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Удалить категорию",
-                "operationId": "5d53cc6e02e3d6977b148e505f7b7fb4",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Категория успешно удалена"
                     },
                     "404": {
                         "description": "Категория не найдена"
@@ -313,6 +211,102 @@
                 }
             }
         },
+        "/api/v1/blog": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Получить список постов блога",
+                "operationId": "cdfb88f09a4f573bcf3e7a8327b85de3",
+                "responses": {
+                    "200": {
+                        "description": "Список постов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ContentResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/page": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Получить список страниц",
+                "operationId": "742dc9712b8debf20a7a8bbdf970f6bc",
+                "responses": {
+                    "200": {
+                        "description": "Список страниц",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ContentResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Получить список системных страниц",
+                "operationId": "1e7e5110b7f9119f0fd96a5c99129694",
+                "responses": {
+                    "200": {
+                        "description": "Список системных страниц",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ContentResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/content": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Получить список материалов",
+                "operationId": "0be08af6ce2d10b06212bdfaf96ca96e",
+                "responses": {
+                    "200": {
+                        "description": "Список материалов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ContentResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/products": {
             "get": {
                 "tags": [
@@ -333,38 +327,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Создать новый товар",
-                "operationId": "9bcbb575942cd412f2ea4306860f9636",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProductDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Товар успешно создан",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProductResource"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Ошибка валидации"
                     }
                 }
             }
@@ -396,76 +358,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Товар не найден"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Обновить существующий товар",
-                "operationId": "9e35c066f44b11451b7bc4e3e7d47e8d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProductDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Товар успешно обновлен",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProductResource"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Товар не найден"
-                    },
-                    "422": {
-                        "description": "Ошибка валидации"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Удалить товар",
-                "operationId": "862b06a891723d01d8eef100927f2e30",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Товар успешно удален"
                     },
                     "404": {
                         "description": "Товар не найден"
@@ -503,6 +395,61 @@
                         "type": "string",
                         "example": "Описание категории",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ContentDTO": {
+                "required": [
+                    "type",
+                    "name",
+                    "slug"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "blog"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Заголовок контента"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "zagolovok-kontenta"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1,
+                        "nullable": true
+                    },
+                    "short_text": {
+                        "type": "string",
+                        "example": "Краткий текст",
+                        "nullable": true
+                    },
+                    "full_text": {
+                        "type": "string",
+                        "example": "Полный текст контента",
+                        "nullable": true
+                    },
+                    "views": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "tag1",
+                            "tag2"
+                        ]
                     }
                 },
                 "type": "object"
@@ -560,6 +507,10 @@
                         "type": "string",
                         "example": "gazovoe-oborudovanie"
                     },
+                    "full_path": {
+                        "type": "string",
+                        "example": "oborudovanie/gazovoe-oborudovanie"
+                    },
                     "status": {
                         "type": "string",
                         "example": "active"
@@ -579,6 +530,64 @@
                 },
                 "type": "object"
             },
+            "ContentResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "blog"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Заголовок контента"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "zagolovok-kontenta"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1,
+                        "nullable": true
+                    },
+                    "short_text": {
+                        "type": "string",
+                        "example": "Краткий текст",
+                        "nullable": true
+                    },
+                    "full_text": {
+                        "type": "string",
+                        "example": "Полный текст контента",
+                        "nullable": true
+                    },
+                    "views": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "tag1",
+                            "tag2"
+                        ]
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "ProductResource": {
                 "properties": {
                     "id": {
@@ -588,6 +597,11 @@
                     "category_id": {
                         "type": "integer",
                         "example": 1
+                    },
+                    "category_full_path": {
+                        "type": "string",
+                        "example": "oborudovanie/gazovoe-oborudovanie",
+                        "nullable": true
                     },
                     "name": {
                         "type": "string",
@@ -616,15 +630,19 @@
     "tags": [
         {
             "name": "Categories",
-            "description": "API для управления категориями"
+            "description": "Управление категориями"
+        },
+        {
+            "name": "Content",
+            "description": "Управление контентом"
+        },
+        {
+            "name": "Products",
+            "description": "Управление товарами"
         },
         {
             "name": "System",
             "description": "System"
-        },
-        {
-            "name": "Products",
-            "description": "Products"
         }
     ]
 }

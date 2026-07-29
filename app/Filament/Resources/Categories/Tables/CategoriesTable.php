@@ -40,6 +40,11 @@ class CategoriesTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                TextColumn::make('full_path')
+                    ->label('Полный путь')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('status')
                     ->label('Статус')
                     ->badge()

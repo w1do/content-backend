@@ -18,6 +18,7 @@ parameters:
         - '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::nonQueued\(\).#'
         - '#Call to an undefined method Pest\\PendingCalls\\TestCall::[a-zA-Z]+\(\).#'
         - '#expects callable\(Illuminate\\Database\\Eloquent\\Model, (int|int\|string)\): .*, Closure\(App\\Infrastructure\\Persistence\\Eloquent\\Category\): .* given.#'
+        - '#Call to an undefined method Kalnoy\\Nestedset\\AncestorsRelation::defaultOrder\(\).#'
         -
             message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$(id|depth|name).#'
             path: app/Filament/Forms/Components/CategorySelect.php

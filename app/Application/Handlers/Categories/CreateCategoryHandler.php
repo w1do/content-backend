@@ -20,6 +20,7 @@ class CreateCategoryHandler
             name: $command->dto->name,
             slug: $command->dto->slug,
             status: $command->dto->status,
+            fullPath: '',
             description: $command->dto->description,
         );
 

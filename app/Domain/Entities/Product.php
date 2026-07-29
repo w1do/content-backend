@@ -11,5 +11,6 @@ class Product
         public string $slug,
         public ?string $description = null,
         public array $attributes = [],
+        public ?string $categoryFullPath = null,
     ) {}
 }
