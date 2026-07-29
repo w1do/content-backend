@@ -96,6 +96,7 @@ class EloquentProductRepository implements ProductRepositoryInterface
             description: $model->description,
             attributes: $model->attributes ?? [],
             categoryFullPath: $category?->full_path,
+            coverUrl: $model->getFirstMediaUrl('cover', 'cover') ?: $model->getFirstMediaUrl('main', 'cover'),
         );
     }
 }

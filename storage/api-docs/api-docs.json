@@ -89,6 +89,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Включить связанные данные (доступно: products)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -146,6 +155,15 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Включить связанные данные (доступно: products)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
@@ -352,6 +370,35 @@
                 ],
                 "summary": "Получить список всех товаров",
                 "operationId": "e422a6932f9da90d47891a91e88effc1",
+                "parameters": [
+                    {
+                        "name": "filter[category_id]",
+                        "in": "query",
+                        "description": "Фильтр по ID категории (можно передать несколько через запятую)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[category_name]",
+                        "in": "query",
+                        "description": "Фильтр по названию категории (частичное совпадение)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[category_full_path]",
+                        "in": "query",
+                        "description": "Фильтр по полному пути категории (точное совпадение)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список товаров",
@@ -564,6 +611,16 @@
                             "$ref": "#/components/schemas/CategoryResource"
                         },
                         "nullable": true
+                    },
+                    "products_count": {
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
+                    "cover_url": {
+                        "type": "string",
+                        "example": "http://localhost/storage/1/conversions/image-cover.jpg",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -659,6 +716,11 @@
                         "example": {
                             "power": "24kW"
                         }
+                    },
+                    "cover_url": {
+                        "type": "string",
+                        "example": "http://localhost/storage/1/conversions/image-cover.jpg",
+                        "nullable": true
                     }
                 },
                 "type": "object"

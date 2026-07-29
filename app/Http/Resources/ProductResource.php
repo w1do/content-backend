@@ -20,6 +20,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'slug', type: 'string', example: 'gazoviy-kotel'),
         new OA\Property(property: 'description', type: 'string', example: 'Описание товара', nullable: true),
         new OA\Property(property: 'attributes', type: 'object', example: ['power' => '24kW']),
+        new OA\Property(property: 'cover_url', type: 'string', example: 'http://localhost/storage/1/conversions/image-cover.jpg', nullable: true),
     ]
 )]
 class ProductResource extends JsonResource
@@ -39,6 +40,7 @@ class ProductResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'attributes' => $this->attributes,
+            'cover_url' => $this->coverUrl,
         ];
     }
 }

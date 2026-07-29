@@ -29,6 +29,7 @@ class CategoryResource extends JsonResource
             'children' => CategoryResource::collection($this->whenLoaded('children')),
             'parent' => new CategoryResource($this->whenLoaded('parent')),
             'ancestors' => CategoryResource::collection($this->whenLoaded('ancestors')),
+            'cover_url' => $this->getFirstMediaUrl('cover', 'cover') ?: $this->getFirstMediaUrl('main', 'cover'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -42,6 +42,10 @@ class Product extends Model implements HasMedia
             ->useDisk('media')
             ->singleFile();
 
+        $this->addMediaCollection('cover')
+            ->useDisk('media')
+            ->singleFile();
+
         $this->addMediaCollection('gallery')
             ->useDisk('media');
     }
@@ -50,6 +54,10 @@ class Product extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 100, 100)
+            ->nonQueued();
+
+        $this->addMediaConversion('cover')
+            ->fit(Fit::Crop, 800, 600)
             ->nonQueued();
     }
 

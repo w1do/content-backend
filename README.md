@@ -66,6 +66,7 @@ composer install
 - [Система товаров](docs/products.md)
 - [Система кеширования](docs/caching.md)
 - [Контент и CMS](docs/contents.md)
+- [UI компоненты](docs/ui.md)
 - [Сводка изменений](docs/summary.md)
 
 ### Контакты

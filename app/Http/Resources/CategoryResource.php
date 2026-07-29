@@ -29,6 +29,7 @@ use OpenApi\Attributes as OA;
             nullable: true
         ),
         new OA\Property(property: 'products_count', type: 'integer', nullable: true, example: 5),
+        new OA\Property(property: 'cover_url', type: 'string', example: 'http://localhost/storage/1/conversions/image-cover.jpg', nullable: true),
     ]
 )]
 class CategoryResource extends JsonResource
@@ -50,6 +51,7 @@ class CategoryResource extends JsonResource
             'description' => $this->description,
             'children' => $this->resolveChildren(),
             'products_count' => $this->when(isset($this->productsCount), $this->productsCount),
+            'cover_url' => $this->coverUrl,
         ];
     }
 

@@ -72,12 +72,20 @@ class Category extends Model implements HasMedia
         $this->addMediaCollection('main')
             ->useDisk('media')
             ->singleFile();
+
+        $this->addMediaCollection('cover')
+            ->useDisk('media')
+            ->singleFile();
     }
 
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 100, 100)
+            ->nonQueued();
+
+        $this->addMediaConversion('cover')
+            ->fit(Fit::Crop, 800, 600)
             ->nonQueued();
     }
 

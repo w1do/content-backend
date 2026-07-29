@@ -158,6 +158,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
                 ? $model->children->map(fn (CategoryModel $child) => $this->toEntity($child))->toArray()
                 : [],
             productsCount: isset($model->products_count) ? (int) $model->products_count : (isset($model->products) && is_numeric($model->products) ? (int) $model->products : null),
+            coverUrl: $model->getFirstMediaUrl('cover', 'cover') ?: $model->getFirstMediaUrl('main', 'cover'),
         );
     }
 }
