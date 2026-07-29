@@ -18,7 +18,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'category_full_path', type: 'string', example: 'oborudovanie/gazovoe-oborudovanie', nullable: true),
         new OA\Property(property: 'name', type: 'string', example: 'Газовый котел'),
         new OA\Property(property: 'slug', type: 'string', example: 'gazoviy-kotel'),
-        new OA\Property(property: 'description', type: 'string', example: 'Описание товара', nullable: true),
+        new OA\Property(property: 'description', type: 'string', description: 'Описание товара в формате Markdown', example: '### Заголовок\n\nОписание товара', nullable: true),
         new OA\Property(property: 'attributes', type: 'object', example: ['power' => '24kW']),
         new OA\Property(property: 'cover_url', type: 'string', example: 'http://localhost/storage/1/conversions/image-cover.jpg', nullable: true),
         new OA\Property(property: 'seo', ref: '#/components/schemas/SeoResource', nullable: true),

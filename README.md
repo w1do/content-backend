@@ -66,6 +66,7 @@ composer install
 - [Система SEO](docs/seo.md)
 - [Управление промптами SEO](docs/prompts.md)
 - [Система товаров](docs/products.md)
+- [Генерация уникального контента (AI)](docs/features/mixed_content_generate.md)
 - [Система кеширования](docs/caching.md)
 - [Контент и CMS](docs/contents.md)
 - [UI компоненты](docs/ui.md)

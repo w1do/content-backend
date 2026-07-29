@@ -7,6 +7,7 @@ use App\Domain\Repositories\ContentRepositoryInterface;
 use App\Domain\Repositories\ProductRepositoryInterface;
 use App\Domain\Repositories\PromptRepositoryInterface;
 use App\Domain\Repositories\SeoRepositoryInterface;
+use App\Domain\Services\ImageSearchProviderInterface;
 use App\Domain\Services\ProductParserInterface;
 use App\Infrastructure\Caching\CacheServiceInterface;
 use App\Infrastructure\Caching\Invalidators\CategoryCacheInvalidator;
@@ -23,6 +24,7 @@ use App\Infrastructure\Persistence\Repositories\EloquentProductRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentPromptRepository;
 use App\Infrastructure\Persistence\Repositories\EloquentSeoRepository;
 use App\Infrastructure\Services\MirGazaProductParser;
+use App\Infrastructure\Services\SerpApiImageSearchProvider;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
@@ -77,6 +79,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ProductParserInterface::class,
             MirGazaProductParser::class
+        );
+
+        $this->app->bind(
+            ImageSearchProviderInterface::class,
+            SerpApiImageSearchProvider::class
         );
 
         Number::useLocale('en');

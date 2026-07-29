@@ -12,7 +12,9 @@ class Content
         public string $name,
         public string $slug,
         public ?int $categoryId = null,
+        /** @var string|null Краткий текст в формате Markdown */
         public ?string $shortText = null,
+        /** @var string|null Полный текст в формате Markdown */
         public ?string $fullText = null,
         public int $views = 0,
         public array $tags = [],

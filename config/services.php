@@ -39,4 +39,8 @@ return [
         'key' => env('POLZA_AI_KEY'),
     ],
 
+    'serp_api' => [
+        'key' => env('SERP_API'),
+    ],
+
 ];

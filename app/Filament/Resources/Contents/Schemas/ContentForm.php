@@ -7,7 +7,7 @@ use App\Domain\Enums\PromptCategory;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
 use App\Infrastructure\Persistence\Eloquent\Content;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -62,7 +62,7 @@ class ContentForm
                             ->rows(3)
                             ->columnSpanFull(),
 
-                        RichEditor::make('full_text')
+                        MarkdownEditor::make('full_text')
                             ->label('Полный текст')
                             ->columnSpanFull()
                             ->hintAction(SeoGenerateAction::make(fn (Get $get) => match ($get('type')) {

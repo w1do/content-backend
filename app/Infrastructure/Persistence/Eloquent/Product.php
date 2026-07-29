@@ -22,7 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $name
  * @property string $slug
- * @property string|null $description
+ * @property string|null $description Описание товара в формате Markdown
  * @property array|null $attributes
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at

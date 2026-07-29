@@ -19,8 +19,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property string $slug
  * @property int|null $category_id
- * @property string|null $short_text
- * @property string|null $full_text
+ * @property string|null $short_text Краткое описание (Markdown)
+ * @property string|null $full_text Полный текст (Markdown)
  * @property int $views
  * @property array|null $tags
  * @property Carbon|null $created_at

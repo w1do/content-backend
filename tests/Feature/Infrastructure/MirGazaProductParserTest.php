@@ -9,6 +9,7 @@ it('can parse product data from mirgaza.ru html', function () {
 <html>
 <head>
     <meta charset="utf-8">
+    <meta itemprop="description" content="SEO description that should be ignored">
 </head>
 <body>
     <h1>Test Product Name</h1>
@@ -38,6 +39,9 @@ it('can parse product data from mirgaza.ru html', function () {
         <p>More description text.</p>
         <button class="report-error-btn">Report</button>
     </div>
+    <div id="complete_set_tab">
+        <p>Included: Part A, Part B.</p>
+    </div>
 </body>
 </html>
 HTML;
@@ -52,6 +56,8 @@ HTML;
     expect($result->name)->toBe('Test Product Name');
     expect($result->description)->toContain('This is a test description.');
     expect($result->description)->toContain('More description text.');
+    expect($result->description)->toContain('Included: Part A, Part B.');
+    expect($result->description)->not->toContain('SEO description that should be ignored');
     expect($result->description)->not->toContain('Характеристики товара');
     expect($result->description)->not->toContain('Report');
     expect($result->attributes)->toBe([

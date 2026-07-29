@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Categories\Schemas;
 
 use App\Domain\Enums\PromptCategory;
+use App\Filament\Actions\SearchImageAction;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
@@ -30,7 +31,8 @@ class CategoryForm
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn (string $operation, $state, $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                ->afterStateUpdated(fn (string $operation, $state, $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
+                                ->suffixAction(SearchImageAction::make('name')),
 
                             TextInput::make('slug')
                                 ->label('Слаг')

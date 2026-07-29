@@ -5,13 +5,14 @@ namespace App\Filament\Resources\Products\Schemas;
 use App\Application\Handlers\Products\ParseProductFromUrlHandler;
 use App\Application\Queries\Products\ParseProductFromUrlQuery;
 use App\Domain\Enums\PromptCategory;
+use App\Filament\Actions\SearchImageAction;
 use App\Filament\Actions\SeoGenerateAction;
 use App\Filament\Forms\Components\CategorySelect;
 use App\Filament\Resources\Seo\Schemas\SeoSchema;
 use App\Infrastructure\Persistence\Eloquent\Product;
 use Filament\Actions\Action;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -49,7 +50,8 @@ class ProductForm
                                                 ->required()
                                                 ->maxLength(255)
                                                 ->live(onBlur: true)
-                                                ->afterStateUpdated(fn (string $operation, $state, $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                                ->afterStateUpdated(fn (string $operation, $state, $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
+                                                ->suffixAction(SearchImageAction::make('name')),
 
                                             TextInput::make('slug')
                                                 ->label('Слаг')
@@ -60,7 +62,7 @@ class ProductForm
                                                 ->unique(Product::class, 'slug', ignoreRecord: true),
                                         ])->columns(2),
 
-                                        RichEditor::make('description')
+                                        MarkdownEditor::make('description')
                                             ->label('Описание')
                                             ->columnSpanFull()
                                             ->hintAction(SeoGenerateAction::make(PromptCategory::Products, 'name')),

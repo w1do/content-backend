@@ -9,6 +9,7 @@ class Product
         public int $categoryId,
         public string $name,
         public string $slug,
+        /** @var string|null Описание товара в формате Markdown */
         public ?string $description = null,
         public array $attributes = [],
         public ?string $categoryFullPath = null,
