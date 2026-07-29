@@ -27,7 +27,7 @@ services:
         volumes:
             - 'app-storage:/var/www/html/storage/app'
             - 'app-logs:/var/www/html/storage/logs'
-            - 'uploads:/var/www/html/public/uploads'
+            - 'app-media:/var/www/html/storage/media'
         networks:
           - dokploy-network
 
@@ -40,5 +40,5 @@ volumes:
         driver: local
     app-logs:
         driver: local
-    uploads:
-         driver: local
+    app-media:
+        driver: local
