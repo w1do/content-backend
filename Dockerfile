@@ -39,10 +39,11 @@ FROM php:8.5-fpm-alpine AS test_stage
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache libzip libpng libpq icu-libs sqlite-libs \
+RUN apk add --no-cache libzip libpng libpq icu-libs sqlite-libs freetype libjpeg-turbo \
     && apk add --no-cache --virtual .build-deps \
-        $PHPIZE_DEPS libzip-dev libpng-dev postgresql-dev icu-dev zlib-dev sqlite-dev \
-    && docker-php-ext-install bcmath intl pdo_sqlite pdo_pgsql zip pcntl \
+        $PHPIZE_DEPS libzip-dev libpng-dev postgresql-dev icu-dev zlib-dev sqlite-dev freetype-dev libjpeg-turbo-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install bcmath gd intl pdo_sqlite pdo_pgsql zip pcntl \
     && pecl install redis && docker-php-ext-enable redis \
     && apk del .build-deps
 
