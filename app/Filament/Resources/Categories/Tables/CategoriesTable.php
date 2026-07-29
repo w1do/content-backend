@@ -45,6 +45,13 @@ class CategoriesTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                TextColumn::make('seo.title')
+                    ->label('SEO Title')
+                    ->searchable()
+                    ->limit(30)
+                    ->placeholder('Не заполнено')
+                    ->toggleable(),
+
                 TextColumn::make('status')
                     ->label('Статус')
                     ->badge()

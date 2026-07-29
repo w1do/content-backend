@@ -35,6 +35,13 @@ class ProductsTable
                     ->badge()
                     ->searchable(),
 
+                TextColumn::make('seo.title')
+                    ->label('SEO Title')
+                    ->searchable()
+                    ->limit(30)
+                    ->placeholder('Не заполнено')
+                    ->toggleable(),
+
                 TextColumn::make('created_at')
                     ->label('Дата создания')
                     ->dateTime('d.m.Y H:i:s')

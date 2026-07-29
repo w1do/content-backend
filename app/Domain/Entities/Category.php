@@ -18,5 +18,6 @@ class Category
         public array $children = [],
         public ?int $productsCount = null,
         public ?string $coverUrl = null,
+        public ?Seo $seo = null,
     ) {}
 }

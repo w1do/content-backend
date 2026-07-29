@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Repositories;
 
 use App\Application\DTO\CategoryFilterDTO;
 use App\Domain\Entities\Category as CategoryEntity;
+use App\Domain\Entities\Seo as SeoEntity;
 use App\Domain\Repositories\CategoryRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Category as CategoryModel;
 use App\Infrastructure\Persistence\Eloquent\Filters\Categories\CategoryFullPathFilter;
@@ -35,7 +36,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
         $request = new Request($params);
 
         $query = QueryBuilder::for(CategoryModel::class, $request)
-            ->with('children')
+            ->with(['children', 'seo'])
             ->allowedFilters(
                 AllowedFilter::custom('id', new CategoryIdFilter),
                 AllowedFilter::custom('name', new CategoryNameFilter),
@@ -82,7 +83,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
 
         /** @var CategoryModel|null $model */
         $model = QueryBuilder::for(CategoryModel::class, $request)
-            ->with('children')
+            ->with(['children', 'seo'])
             ->allowedIncludes(
                 AllowedInclude::count('products', 'products'),
             )
@@ -93,7 +94,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
 
     public function findBySlug(string $slug): ?CategoryEntity
     {
-        $model = CategoryModel::with('children')->where('slug', $slug)->first();
+        $model = CategoryModel::with(['children', 'seo'])->where('slug', $slug)->first();
 
         return $model ? $this->toEntity($model) : null;
     }
@@ -159,6 +160,16 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
                 : [],
             productsCount: isset($model->products_count) ? (int) $model->products_count : (isset($model->products) && is_numeric($model->products) ? (int) $model->products : null),
             coverUrl: $model->getFirstMediaUrl('cover', 'cover') ?: $model->getFirstMediaUrl('main', 'cover'),
+            seo: $model->relationLoaded('seo') && $model->seo ? new SeoEntity(
+                id: $model->seo->id,
+                seoableType: $model->seo->seoable_type,
+                seoableId: $model->seo->seoable_id,
+                title: $model->seo->title,
+                description: $model->seo->description,
+                isIndexable: $model->seo->is_indexable,
+                meta: $model->seo->meta ?? [],
+                imageUrl: $model->seo->getFirstMediaUrl('image'),
+            ) : null,
         );
     }
 }

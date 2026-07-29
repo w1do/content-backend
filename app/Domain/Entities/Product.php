@@ -13,5 +13,6 @@ class Product
         public array $attributes = [],
         public ?string $categoryFullPath = null,
         public ?string $coverUrl = null,
+        public ?Seo $seo = null,
     ) {}
 }

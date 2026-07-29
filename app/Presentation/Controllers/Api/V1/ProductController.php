@@ -44,6 +44,13 @@ final class ProductController extends Controller
                 required: false,
                 schema: new OA\Schema(type: 'string')
             ),
+            new OA\Parameter(
+                name: 'filter[slug]',
+                description: 'Фильтр по слагу товара (точное совпадение, можно передать несколько через запятую)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
         ],
         responses: [
             new OA\Response(

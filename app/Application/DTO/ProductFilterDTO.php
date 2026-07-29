@@ -30,5 +30,9 @@ class ProductFilterDTO extends Data
         #[MapInputName('category_full_path')]
         #[MapOutputName('category_full_path')]
         public ?string $categoryFullPath = null,
+
+        #[MapInputName('slug')]
+        #[MapOutputName('slug')]
+        public ?string $slug = null,
     ) {}
 }

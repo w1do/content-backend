@@ -397,6 +397,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "filter[slug]",
+                        "in": "query",
+                        "description": "Фильтр по слагу товара (точное совпадение, можно передать несколько через запятую)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -621,6 +630,14 @@
                         "type": "string",
                         "example": "http://localhost/storage/1/conversions/image-cover.jpg",
                         "nullable": true
+                    },
+                    "seo": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SeoResource"
+                            }
+                        ],
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -721,6 +738,44 @@
                         "type": "string",
                         "example": "http://localhost/storage/1/conversions/image-cover.jpg",
                         "nullable": true
+                    },
+                    "seo": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SeoResource"
+                            }
+                        ],
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "SeoResource": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Заголовок страницы",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Описание страницы для поисковиков",
+                        "nullable": true
+                    },
+                    "is_indexable": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "example": "http://localhost/storage/1/seo/image.jpg",
+                        "nullable": true
+                    },
+                    "meta": {
+                        "type": "object",
+                        "example": {
+                            "keywords": "газ, котлы"
+                        }
                     }
                 },
                 "type": "object"

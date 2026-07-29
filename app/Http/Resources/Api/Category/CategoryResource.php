@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Category;
 
+use App\Http\Resources\SeoResource;
 use App\Infrastructure\Persistence\Eloquent\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,6 +31,7 @@ class CategoryResource extends JsonResource
             'parent' => new CategoryResource($this->whenLoaded('parent')),
             'ancestors' => CategoryResource::collection($this->whenLoaded('ancestors')),
             'cover_url' => $this->getFirstMediaUrl('cover', 'cover') ?: $this->getFirstMediaUrl('main', 'cover'),
+            'seo' => new SeoResource($this->whenLoaded('seo')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

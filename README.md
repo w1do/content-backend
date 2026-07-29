@@ -63,6 +63,7 @@ composer install
 ## Документация
 Подробные описания модулей находятся в папке `docs/`:
 - [Иерархия категорий](docs/categories.md)
+- [Система SEO](docs/seo.md)
 - [Система товаров](docs/products.md)
 - [Система кеширования](docs/caching.md)
 - [Контент и CMS](docs/contents.md)
