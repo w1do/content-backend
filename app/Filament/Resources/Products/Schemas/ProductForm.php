@@ -51,7 +51,7 @@ class ProductForm
 
                                             $set('name', $result->name);
                                             $set('slug', Str::slug($result->name));
-                                            $set('description', $result->description);
+                                            $set('description', filled($result->description) ? $result->description : null);
                                             $set('attributes', $result->attributes);
 
                                             Notification::make()

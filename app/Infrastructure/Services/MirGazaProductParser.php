@@ -71,7 +71,7 @@ class MirGazaProductParser implements ProductParserInterface
     /**
      * Извлекает описание товара, исключая блок характеристик.
      */
-    private function extractDescription(DOMXPath $xpath, DOMDocument $dom): string
+    private function extractDescription(DOMXPath $xpath, DOMDocument $dom): ?string
     {
         $nodes = $xpath->query('//div[@class="content" and @itemprop="description"]');
         if ($nodes->length === 0) {
@@ -80,7 +80,7 @@ class MirGazaProductParser implements ProductParserInterface
         }
 
         if ($nodes->length === 0) {
-            return '';
+            return null;
         }
 
         /** @var \DOMElement $node */
@@ -107,7 +107,9 @@ class MirGazaProductParser implements ProductParserInterface
             $html .= $dom->saveHTML($child);
         }
 
-        return trim($html);
+        $html = trim($html);
+
+        return $html === '' ? null : $html;
     }
 
     /**
