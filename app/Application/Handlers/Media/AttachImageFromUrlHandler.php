@@ -12,6 +12,10 @@ class AttachImageFromUrlHandler
      */
     public function handle(AttachImageFromUrlCommand $command): Media
     {
+        if ($command->clearCollection) {
+            $command->model->clearMediaCollection($command->collectionName);
+        }
+
         $adder = $command->model->addMediaFromUrl($command->imageUrl);
 
         if ($command->fileName) {

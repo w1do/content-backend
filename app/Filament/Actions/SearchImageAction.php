@@ -28,10 +28,18 @@ class SearchImageAction
             ->color('primary')
             ->modalHeading('Выбор изображения')
             ->modalSubmitActionLabel('Сохранить')
-            ->modalWidth('4xl')
+            ->modalWidth('6xl')
             ->form(function ($get) use ($searchField) {
                 $query = $get($searchField);
                 $images = [];
+
+                if (blank(config('services.serp_api.key'))) {
+                    Notification::make()
+                        ->title('Ошибка конфигурации')
+                        ->body('Ключ SERP_API не найден. Проверьте настройки.')
+                        ->danger()
+                        ->send();
+                }
 
                 if (filled($query)) {
                     try {
@@ -108,10 +116,18 @@ class SearchImageAction
                         model: $record,
                         imageUrl: $imageUrl,
                         collectionName: 'main',
-                        fileName: $fileName
+                        fileName: $fileName,
+                        clearCollection: true
                     ));
 
-                    $livewire->refresh();
+                    $record->refresh();
+                    $record->load('media');
+
+                    if (method_exists($livewire, 'refreshFormData')) {
+                        $livewire->refreshFormData(['image', 'name']);
+                    } else {
+                        $livewire->refresh();
+                    }
 
                     Notification::make()
                         ->title('Изображение успешно сохранено')

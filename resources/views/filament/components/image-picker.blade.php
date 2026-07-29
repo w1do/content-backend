@@ -8,61 +8,52 @@
 
 <div
     x-data="{
-        state: $wire.$entangle('{{ $statePath }}'),
+        selected: @js($getState()),
+        select(url) {
+            this.selected = url;
+            $wire.set(@js($statePath), url, false);
+        },
     }"
-    class="w-full"
+    style="width: 100%;"
 >
-    @if(count($images) > 0)
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[60vh] p-2">
-            @foreach($images as $image)
+    @if (count($images) > 0)
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; max-height: 60vh; overflow-y: auto; padding: 0.25rem;"
+        >
+            @foreach ($images as $image)
                 <div
-                    @click="state = '{{ $image->url }}'"
-                    :class="{
-                        'ring-4 ring-primary-500 ring-offset-2 z-10 scale-[1.02]': state === '{{ $image->url }}',
-                        'opacity-80 hover:opacity-100 border-gray-200 dark:border-gray-700': state !== '{{ $image->url }}'
-                    }"
-                    class="relative cursor-pointer rounded-xl overflow-hidden border shadow-sm transition-all bg-white dark:bg-gray-800 flex flex-col h-full group"
+                    wire:key="{{ $statePath }}-{{ $loop->index }}"
+                    x-on:click="select(@js($image->url))"
+                    x-bind:style="selected === @js($image->url)
+                        ? 'border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);'
+                        : 'border-color: rgba(148, 163, 184, 0.35);'"
+                    style="position: relative; aspect-ratio: 1 / 1; cursor: pointer; border-radius: 0.5rem; overflow: hidden; border: 2px solid rgba(148, 163, 184, 0.35); background-color: rgba(148, 163, 184, 0.12); transition: box-shadow 150ms ease, border-color 150ms ease;"
                 >
-                    <div class="aspect-square w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
-                        <img
-                            src="{{ $image->url }}"
-                            alt="{{ $image->title }}"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                            loading="lazy"
-                        />
-                    </div>
-
-                    @if($image->title || $image->source)
-                        <div class="p-2 flex-grow flex flex-col justify-between">
-                            @if($image->title)
-                                <p class="text-[10px] leading-tight text-gray-700 dark:text-gray-300 line-clamp-2 mb-1" title="{{ $image->title }}">
-                                    {{ $image->title }}
-                                </p>
-                            @endif
-                            @if($image->source)
-                                <p class="text-[8px] text-primary-600 dark:text-primary-400 font-bold uppercase tracking-wider truncate">
-                                    {{ $image->source }}
-                                </p>
-                            @endif
-                        </div>
-                    @endif
+                    <img
+                        src="{{ $image->url }}"
+                        alt="{{ $image->title }}"
+                        loading="lazy"
+                        style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                    />
 
                     <div
-                        x-show="state === '{{ $image->url }}'"
-                        class="absolute top-2 right-2 bg-primary-500 text-white rounded-full p-1.5 shadow-md"
+                        x-cloak
+                        x-show="selected === @js($image->url)"
+                        style="position: absolute; top: 0.375rem; right: 0.375rem; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; border-radius: 9999px; background-color: #f59e0b; color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.35);"
                     >
-                        <x-heroicon-m-check class="w-4 h-4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 1rem; height: 1rem;">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-        <div class="p-12 text-center bg-gray-50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800">
-            <div class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-600">
-                <x-heroicon-o-camera class="w-16 h-16 mb-4 opacity-20" />
-                <p class="text-lg font-medium">{{ __('No images found for this query.') }}</p>
-                <p class="text-sm">{{ __('Try changing the name or check your API configuration.') }}</p>
-            </div>
+        <div
+            style="padding: 2.5rem; text-align: center; border: 2px dashed rgba(148, 163, 184, 0.4); border-radius: 0.75rem; color: rgba(107, 114, 128, 1);"
+        >
+            <p style="font-weight: 500; margin-bottom: 0.25rem;">Изображения не найдены</p>
+            <p style="font-size: 0.875rem;">Измените наименование или проверьте настройки SERP_API.</p>
         </div>
     @endif
 </div>

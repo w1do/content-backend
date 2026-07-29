@@ -11,5 +11,6 @@ class AttachImageFromUrlCommand
         public string $imageUrl,
         public string $collectionName = 'main',
         public ?string $fileName = null,
+        public bool $clearCollection = false,
     ) {}
 }
